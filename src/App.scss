@@ -1,0 +1,89 @@
+body {
+    background-color: var(--color-gray-50);
+}
+
+h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+h2 {
+    font-size: 1rem;
+}
+// p {
+//     font-size: 1rem;
+// }
+
+header {
+    background-color: var(--color-white);
+}
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    a {
+        display: inline-block;
+    }
+    div > a {
+        margin-inline: 2rem;
+    }
+    svg {
+        display: inline-block;
+    }
+    .boxed {
+        display: grid;
+        place-content: center;
+        width: 52px;
+        height: 52px;
+        border: solid 1pt #633CFF;
+        border-radius: 8px;
+    }
+}
+
+.login-card, .signup-card, .profile-card, .linkedit-card {
+    h2 {
+        margin-bottom: 2rem;
+    }
+    label {
+        width: 100%;
+        font-size: 0.75rem;
+        color: var(--color-gray-900);
+    }
+    input, select {
+        width: 100%;
+        border: solid 1pt var(--color-gray-200);
+        padding: 0.5rem;
+    }
+    button {
+        width: 100%;
+        background-color: #633CFF;
+        color: var(--color-white);
+        padding: 0.5rem;
+        border-radius: 8px;
+    }
+    button.button-text {
+        width: fit-content;
+        background-color: transparent;
+        color: inherit;
+        border: none;
+    }
+    a {
+        //display: block;
+        text-decoration: underline;
+        color: #633CFF;
+    }
+}
+.profile-img {
+    //display: grid;
+    img {
+        width: 104px;
+        //height: 104px;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 50%;
+        border: solid 2pt #633CFF
+    }
+}
+.platform-entry > img {
+    display: inline-block;
+}

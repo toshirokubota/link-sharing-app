@@ -1,0 +1,83 @@
+body {
+  background-color: var(--color-gray-50);
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+header {
+  background-color: var(--color-white);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+nav a {
+  display: inline-block;
+}
+nav div > a {
+  margin-inline: 2rem;
+}
+nav svg {
+  display: inline-block;
+}
+nav .boxed {
+  display: grid;
+  place-content: center;
+  width: 52px;
+  height: 52px;
+  border: solid 1pt #633CFF;
+  border-radius: 8px;
+}
+
+.login-card h2, .signup-card h2, .profile-card h2, .linkedit-card h2 {
+  margin-bottom: 2rem;
+}
+.login-card label, .signup-card label, .profile-card label, .linkedit-card label {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--color-gray-900);
+}
+.login-card input, .login-card select, .signup-card input, .signup-card select, .profile-card input, .profile-card select, .linkedit-card input, .linkedit-card select {
+  width: 100%;
+  border: solid 1pt var(--color-gray-200);
+  padding: 0.5rem;
+}
+.login-card button, .signup-card button, .profile-card button, .linkedit-card button {
+  width: 100%;
+  background-color: #633CFF;
+  color: var(--color-white);
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+.login-card button.button-text, .signup-card button.button-text, .profile-card button.button-text, .linkedit-card button.button-text {
+  width: fit-content;
+  background-color: transparent;
+  color: inherit;
+  border: none;
+}
+.login-card a, .signup-card a, .profile-card a, .linkedit-card a {
+  text-decoration: underline;
+  color: #633CFF;
+}
+
+.profile-img img {
+  width: 104px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border: solid 2pt #633CFF;
+}
+
+.platform-entry > img {
+  display: inline-block;
+}/*# sourceMappingURL=App.css.map */
