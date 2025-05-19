@@ -19,64 +19,81 @@ export const presetLinkIcon = new Map<string,string>([
     ['HashNode','icon-hashnode.svg'],
     ['Twitch','icon-twitch.svg'],
     ['Twitter','icon-twitter.svg']
+]);
+
+export const presetLinkURL = new Map<string,string>([
+    ['GitHub', 'http://www.github.com'],
+    ['YouTube', 'http://www.yourtube.com'],
+    ['LinkedIn', 'http://www.linkedin.com'],
+    ['Stack Overflow','http://www.stackoverflow.com'],
+    ['CodePen','http://www.codepen.com'],
+    ['CodeWars','http://www.codewars.com'],
+    ['DEV Community','http://www.dev.to'],
+    ['FaceBook','http://www.facebook.com'],
+    ['FreeCodeCamp','http://www.freecodecamp.org'],
+    ['FrontEndMentor','http://www.frontendmentor.io'],
+    ['GitLab','http://www.gitlab.com'],
+    ['HashNode','http://www.hashnode.com'],
+    ['Twitch','http://www.twitch.com'],
+    ['Twitter','http://www.X.com']
 ])
 
 export const linksPreset: LinkObject[] = [
     {
         platform: 'GitHub',
-        link: 'http://www.github.com',
+        link: '',
     },
     {
         platform: 'YouTube',
-        link: 'http://www.yourtube.com',
+        link: '',
     },
     {
         platform: 'LinkedIn',
-        link: 'http://www.linkedin.com',
+        link: '',
     },
     {
         platform: 'Stack Overflow',
-        link: 'http://www.stackoverflow.com',
+        link: '',
     },
     {
         platform: 'CodePen',
-        link: 'http://www.codepen.com',
+        link: '',
     },
     {
         platform: 'CodeWars',
-        link: 'http://www.codewars.com',
+        link: '',
     },
     {
         platform: 'DEV Community',
-        link: 'http://www.dev.to',
+        link: '',
    },
     {
         platform: 'FaceBook',
-        link: 'http://www.facebook.com',
+        link: '',
     },
     {
         platform: 'FreeCodeCamp',
-        link: 'http://www.freecodecamp.org',
+        link: '',
     },
     {
         platform: 'FrontEndMentor',
-        link: 'http://www.frontendmentor.io',
+        link: '',
     },
     {
         platform: 'GitLab',
-        link: 'http://www.gitlab.com',
+        link: '',
     },
     {
         platform: 'HashNode',
-        link: 'http://www.hashnode.com',
+        link: '',
     },
     {
         platform: 'Twitch',
-        link: 'http://www.twitch.com',
+        link: '',
     },
     {
         platform: 'Twitter',
-        link: 'http://www.X.com',
+        link: '',
     }
 ];
 

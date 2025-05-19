@@ -10,6 +10,25 @@ export default function EditLinks({links, setLinks}:
     }
 ) {
   const [editedLinks, setEditedLinks] = useState<LinkObject[]>(links);
+  const [dragging, setDragging] = useState(-1);
+
+  const handleDragStart = (event, index) => {
+    setDragging(index);
+    console.log('drag started.', index);
+  };
+  const handleDragOver = (event) => {
+      event.preventDefault();
+  };
+  const handleDrop = (event, index) => {
+    if(dragging >= 0) {
+      const newItems = [...editedLinks];
+      const draggedItem = newItems.splice(dragging, 1)[0];
+      newItems.splice(index, 0, draggedItem);
+      setEditedLinks(newItems);
+      setDragging(-1);
+    }
+    console.log('drag ended.', index);
+  };
 
   const addLink = () => {
     setEditedLinks(prev => [{platform: '', link: ''}, ...prev]);
@@ -48,11 +67,13 @@ export default function EditLinks({links, setLinks}:
             {
               editedLinks.map((link, idx) => 
                 (<LinkRepeater 
-                  key={link.platform} 
+                  key={link.platform + Date.now()} 
                   index={idx} 
                   link={link} 
                   links={editedLinks}
-                  setLinks={setEditedLinks}/>))
+                  setLinks={setEditedLinks}
+                  dndHandler={{handleDragStart, handleDragOver, handleDrop}}
+                />))
             }
           </div>
         }
