@@ -80,4 +80,21 @@ nav .boxed {
 
 .platform-entry > img {
   display: inline-block;
+}
+
+.mockup {
+  padding-top: 2rem;
+  position: relative;
+}
+.mockup .mockup-entry {
+  width: 237px;
+  height: 44px;
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+}
+.mockup .mockup-entry span {
+  display: block;
 }/*# sourceMappingURL=App.css.map */

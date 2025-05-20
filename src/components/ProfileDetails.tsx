@@ -1,36 +1,41 @@
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import ProfilePicture from "./ProfilePicture";
 
 export default function ProfileDetails() {
-    const [formData, setFormData] = useState({firstName: '', lastName: '', email: ''});
+    const [formData, setFormData] = useState({firstname: '', lastname: '', email: '', photo: ''});
 
     const handleChange = (event: ChangeEvent)=> {
-        const name = (event.target as HTMLInputElement).name;
+        const name2 = (event.target as HTMLInputElement).name;
         const value = (event.target as HTMLInputElement).value;
-        setFormData(prev => ({...prev, [name]: value}))
+        setFormData(prev => {console.log('handleChange: ', {...prev, [name2]: value}); return ({...prev, [name2]: value});});
     }
+    const handleSave = (event: SubmitEvent) => {
+        event.preventDefault();
+        console.log('profile is saved.', formData);
+    }
+
     return (
         <div className="profile-card p-8">
             <h1>Profile Details</h1>
             <p>Add your details to create a personal touch to your profile.</p>
             <ProfilePicture />
 
-            <form>
-                <label htmlFor="first-name">First name*</label>
+            <form onSubmit={handleSave}>
+                <label htmlFor="firstname">First name*</label>
                 <input 
                     type="text" 
-                    id="first-name" 
-                    name="first-name" 
-                    value={formData.firstName}
+                    id="firstname" 
+                    name="firstname" 
+                    value={formData.firstname}
                     onChange={handleChange}
                     placeholder="e.g. John"
                 />
-                <label htmlFor="last-name">Last name*</label>
+                <label htmlFor="lastname">Last name*</label>
                 <input 
                     type="text" 
-                    id="last-name" 
-                    name="last-name" 
-                    value={formData.lastName}
+                    id="lastname" 
+                    name="lastname" 
+                    value={formData.lastname}
                     onChange={handleChange}
                     placeholder="e.g. Appleseed"
                 />
@@ -43,8 +48,8 @@ export default function ProfileDetails() {
                     onChange={handleChange}
                     placeholder="e.g. email@example.com"
                 />
+                <button className="mt-8">Save</button>            
             </form>
-            
         </div>
     )
 }

@@ -8,7 +8,7 @@ export const presetLinkIcon = new Map<string,string>([
     ['GitHub', 'icon-github.svg'],
     ['YouTube', 'icon-youtube.svg'],
     ['LinkedIn', 'icon-linkedin.svg'],
-    ['Stack Overflow','icon-staci-overflow.svg'],
+    ['Stack Overflow','icon-stack-overflow.svg'],
     ['CodePen','icon-codepen.svg'],
     ['CodeWars','icon-codewars.svg'],
     ['DEV Community','icon-devto.svg'],
@@ -36,6 +36,23 @@ export const presetLinkURL = new Map<string,string>([
     ['HashNode','http://www.hashnode.com'],
     ['Twitch','http://www.twitch.com'],
     ['Twitter','http://www.X.com']
+])
+
+export const presetLinkColor = new Map<string,{backgroundColor:string,color:string}>([
+    ['GitHub', {backgroundColor:'#1A1A1A', color: 'white'}],
+    ['YouTube', {backgroundColor:'#EE3939', color: 'white'}],
+    ['LinkedIn', {backgroundColor:'#2D68FF', color: 'white'}],
+    ['Stack Overflow',{backgroundColor:'#EC7100', color: 'white'}],
+    ['CodePen',{backgroundColor:'#247845', color: 'white'}],
+    ['CodeWars',{backgroundColor:'#8A1A50', color: 'white'}],
+    ['DEV Community',{backgroundColor:'#333333', color: 'white'}],
+    ['FaceBook',{backgroundColor:'#2442AC', color: 'white'}],
+    ['FreeCodeCamp',{backgroundColor:'#302267', color: 'white'}],
+    ['FrontEndMentor',{backgroundColor:'white', color: '#333333'}],
+    ['GitLab',{backgroundColor:'#EB4925', color: 'white'}],
+    ['HashNode',{backgroundColor:'#0330D1', color: 'white'}],
+    ['Twitch',{backgroundColor:'#EE3FC8', color: 'white'}],
+    ['Twitter',{backgroundColor:'#43B7E9', color: 'white'}]
 ])
 
 export const linksPreset: LinkObject[] = [
@@ -96,4 +113,19 @@ export const linksPreset: LinkObject[] = [
         link: '',
     }
 ];
+
+export const storageKeyPrefix = 'link_share'
+export const storageKeys = {
+    profilePhoto: 'profilePhoto',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    links: 'links',
+}
+export const formStorageKey = (key: string) => {
+    if(Object.keys(storageKeys).includes(key)) {
+        return storageKeyPrefix + '.' + storageKeys[key];
+    } else {
+        return undefined;
+    }
+}
 
