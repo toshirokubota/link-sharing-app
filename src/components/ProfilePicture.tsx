@@ -1,30 +1,40 @@
-import { useEffect, useState, type ChangeEvent } from "react";
-import { staticAsset, storageKeyPrefix, storageKeys } from "../lib";
-import type { DropArgument } from "net";
-import type { FileChangeInfo } from "fs/promises";
+import { useEffect } from "react";
+import { formStorageKey, staticAsset } from "../lib";
+import type { Profile } from "../types";
 
-export default function ProfilePicture () {
-    const [imageSrc, setImageSrc] = useState(null);
-    const [filename, setFilename] = useState(null);
+export default function ProfilePicture ({profile, setProfile}:
+    {
+        profile: Profile,
+        setProfile: React.Dispatch<React.SetStateAction<Profile>>
+    }
+) {
+    //const [imageSrc, setImageSrc] = useState<string | null>(null);
+    //const [filename, setFilename] = useState<string | null>(null);
     useEffect(()=> {
-        const item = localStorage.getItem(storageKeyPrefix + '.' + storageKeys.profilePhoto);
-        if(item) {
-            const image_src = JSON.parse(item);
-            if(image_src) {
-                setImageSrc(image_src);
-            }
-        } 
+        const key: string = formStorageKey('profile');
+        if(key) {
+            const item = localStorage.getItem(key);
+            if(item) {
+                const image_src = JSON.parse(item);
+                if(image_src) {
+                    setProfile(prev => ({...prev, photo: image_src}));
+                }
+            } 
+        }
     }, []);
     useEffect(()=> {
-        if(imageSrc) {
-            localStorage.setItem(storageKeyPrefix + '.' + storageKeys.profilePhoto, JSON.stringify(imageSrc));
+        if(profile.photo) {
+            const key: string = formStorageKey('profile');
+            if(key) {
+                localStorage.setItem(key, JSON.stringify(profile.photo));
+            }
         }
-    }, [imageSrc]);
+    }, [profile.photo]);
 
-    const handleChange = (event) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
 
-        const file = event.target.files[0]; // Get the first dropped file
+        const file = event.target.files?.[0]; // Get the first dropped file
         if (file) {
             //setFilename(file.name);
             handleImageUpload(file);
@@ -35,22 +45,22 @@ export default function ProfilePicture () {
         //const file = event.target.files[0] || ; // Get the uploaded file
         if (file) {
             const reader = new FileReader();
-            reader.onload = () => setImageSrc(reader.result); // Set image as base64 URL
+            reader.onload = () => setProfile(prev => ({...prev, photo: reader.result as string})); // Set image as base64 URL
             reader.readAsDataURL(file); // Read file as data URL
         }
     };
 
-    const handleDrop = (event) => {
+    const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
 
-        const file = event.dataTransfer.files[0]; // Get the first dropped file
+        const file = event.dataTransfer?.files?.[0]; // Get the first dropped file
         if (file) {
             //setFilename(file.name);
             handleImageUpload(file);
         }
     };
 
-    const handleDragOver = (event: DragEvent) => {
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault(); // Prevent default behavior to allow drop
     };
 
@@ -72,9 +82,9 @@ export default function ProfilePicture () {
                     cursor: "pointer",
                 }}
             >
-                {imageSrc ? 
+                {profile.photo ? 
                     <div className="profile-img">
-                        <img src={imageSrc} alt='profile photo'/>
+                        <img src={profile.photo} alt='profile photo'/>
                     </div>
                     :
                     <label htmlFor="file-input" className="flex justify-center">

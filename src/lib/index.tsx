@@ -116,16 +116,10 @@ export const linksPreset: LinkObject[] = [
 
 export const storageKeyPrefix = 'link_share'
 export const storageKeys = {
-    profilePhoto: 'profilePhoto',
-    firstname: 'firstname',
-    lastname: 'lastname',
     links: 'links',
+    profile: 'profile'
 }
-export const formStorageKey = (key: string) => {
-    if(Object.keys(storageKeys).includes(key)) {
-        return storageKeyPrefix + '.' + storageKeys[key];
-    } else {
-        return undefined;
-    }
+export const formStorageKey = (key: keyof typeof storageKeys) => {
+    return storageKeyPrefix + '.' + storageKeys[key];
 }
 

@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from "react";
-import Select from "react-select";
+import Select, { type SingleValue } from "react-select";
 import type { LinkObject } from "../types";
 import { linksPreset, presetLinkIcon, presetLinkURL, staticAsset } from "../lib";
 
@@ -28,23 +28,23 @@ export default function LinkRepeater(
     const availableOptions = options.filter(op => !links.find(mk => mk.platform == op.value))
     const [selectedOption, setSelectedOption] = useState(
         options.find(option => option.value == link.platform))
-    const [dragging, setDragging] = useState(0);
-
 
     const handleUrlChange = (event: ChangeEvent)=> {
         const value = (event.target as HTMLInputElement).value;
+        console.log('handleUrlChange: ', value);
         setLinks(prev => 
             prev.map(lk => 
                 lk === link ? ({...lk, link: value}): lk));
     }
 
-    const handlePlatformChange = (selected) => {
+
+    const handlePlatformChange = (selected: SingleValue<{ label: React.JSX.Element; value: string }>) => {
+        if(selected) {
         setSelectedOption(selected);
         setLinks(prev => 
             prev.map(lk => 
                 lk === link ? ({...lk, platform: selected.value}): lk));
-        
-        //console.log('handlePlatformChange: ', hint, selected.value)
+        }
     }
 
     const removeLink = () => {
@@ -52,18 +52,6 @@ export default function LinkRepeater(
             prev.filter(lk => lk.platform != link.platform)
         )
     }
-    // const handleDragStart = (event) => {
-    //     //event.preventDefault();
-    //     console.log('dragging starts', event);
-    // };
-    // const handleDragOver = (event) => {
-    //     event.preventDefault();
-    //     //console.log('dragging...', event);
-    // };
-    // const handleDrop = (event) => {
-    //     //event.preventDefault();
-    //     console.log('dragging end', event);
-    // };
 
     return (
         <div className='link-repeater'>
