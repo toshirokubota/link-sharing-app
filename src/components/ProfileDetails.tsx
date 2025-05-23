@@ -1,6 +1,7 @@
-//import { useState } from "react";
+import { useState } from "react";
 import ProfilePicture from "./ProfilePicture";
 import type { Profile } from "../types";
+import { isEmpty, isValidEmail } from "../lib";
 
 export default function ProfileDetails({profile, setProfile}:
     {
@@ -9,6 +10,7 @@ export default function ProfileDetails({profile, setProfile}:
     }
 ) {
     //const [formData, setFormData] = useState({firstname: '', lastname: '', email: '', photo: ''});
+    const [error, setError] = useState({firstname: false, lastname: false, email_empty: false, email: false});
 
     const handleChange = (event: React.ChangeEvent)=> {
         const name2 = (event.target as HTMLInputElement).name;
@@ -17,7 +19,18 @@ export default function ProfileDetails({profile, setProfile}:
     }
     const handleSave = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log('profile is saved.', profile);
+        if(isEmpty(profile.firstname)) {
+            setError(prev => ({...prev, firstname: true}))
+        }
+        if(isEmpty(profile.lastname)) {
+            setError(prev => ({...prev, lastname: true}))
+        }
+        if(isEmpty(profile.email)) {
+            setError(prev => ({...prev, email_empty: true}))
+        } else if(!isValidEmail(profile.email)) {
+            setError(prev => ({...prev, email: true}))
+        }
+        //console.log('profile is saved.', profile);
     }
 
     return (
@@ -27,6 +40,7 @@ export default function ProfileDetails({profile, setProfile}:
             <ProfilePicture profile={profile} setProfile={setProfile}/>
 
             <form onSubmit={handleSave}>
+                <div className={"firstname-section" + `${error.firstname ? ' empty': ''}`}>
                 <label htmlFor="firstname">First name*</label>
                 <input 
                     type="text" 
@@ -34,8 +48,12 @@ export default function ProfileDetails({profile, setProfile}:
                     name="firstname" 
                     value={profile.firstname}
                     onChange={handleChange}
+                    onFocus={()=> {setError(prev => ({...prev, firstname: false}))}}
                     placeholder="e.g. John"
                 />
+                <p className="error-empty">Can't be empty</p>
+                </div>
+                <div className={"lastname-section" + `${error.lastname ? ' empty': ''}`}>
                 <label htmlFor="lastname">Last name*</label>
                 <input 
                     type="text" 
@@ -43,17 +61,25 @@ export default function ProfileDetails({profile, setProfile}:
                     name="lastname" 
                     value={profile.lastname}
                     onChange={handleChange}
+                    onFocus={()=> {setError(prev => ({...prev, lastname: false}))}}
                     placeholder="e.g. Appleseed"
                 />
+                <p className="error-empty">Can't be empty</p>
+                </div>
+                <div className={"email-section" + `${error.email_empty ? ' empty': ''}` + `${error.email ? ' invalid': ''}`}>
                 <label htmlFor="email">Email</label>
                 <input 
-                    type="text" 
+                    type="email" 
                     id="email" 
                     name="email" 
                     value={profile.email}
                     onChange={handleChange}
+                    onFocus={()=> {setError(prev => ({...prev, email: false, email_empty:false}))}}
                     placeholder="e.g. email@example.com"
                 />
+                <p className="error-invalid">Invalid email address</p>
+                <p className="error-empty">Can't be empty</p>
+                </div>
                 <button className="mt-8">Save</button>            
             </form>
         </div>

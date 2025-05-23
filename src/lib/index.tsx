@@ -117,9 +117,24 @@ export const linksPreset: LinkObject[] = [
 export const storageKeyPrefix = 'link_share'
 export const storageKeys = {
     links: 'links',
-    profile: 'profile'
+    profile: 'profile',
+    signup: 'signup',
 }
 export const formStorageKey = (key: keyof typeof storageKeys) => {
     return storageKeyPrefix + '.' + storageKeys[key];
 }
 
+const urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(:[0-9]+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
+const emailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+export function isValidURL(url: string): boolean {
+    return urlRegex.test(url);
+}
+
+export function isValidEmail(email: string): boolean {
+    return emailRegex.test(email);
+}
+
+export function isEmpty(str: string): boolean {
+    return str.trim().length === 0;
+}

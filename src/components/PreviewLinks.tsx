@@ -21,8 +21,8 @@ export default function PreviewLinks({links, profile}:
                         <span>{profile.lastname.length > 0 ? profile.lastname[0].toUpperCase(): '?'}</span>
                     </div>
             }
-            <p className='text-sm align-middle'>{profile.firstname} {profile.lastname}</p>
-            <p className='text-xs align-middle'>{profile.email}</p>
+            <p className='text-3xl font-bold align-middle my-4'>{profile.firstname} {profile.lastname}</p>
+            <p className='text-xs align-middle my-4'>{profile.email}</p>
             {                
                 links.map((k) => 
                     <div key={k.platform} 
@@ -33,10 +33,11 @@ export default function PreviewLinks({links, profile}:
                         }}> 
                         <div>
                             <img 
-                                className='inline-block mx-4'
+                                className={'inline-block mr-2 ' + `${presetLinkColor.get(k.platform)?.color == 'white' ? 'icon-light': 'icon-dark'}`}
                                 src={staticAsset('/images/' + presetLinkIcon.get(k.platform))} 
                                 alt={k.platform + ' logo'} 
-                                style={{color: presetLinkColor.get(k.platform)?.color}}/>
+                                //style={{color: presetLinkColor.get(k.platform)?.color}}
+                            />
                             <span>{k.platform}</span>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">

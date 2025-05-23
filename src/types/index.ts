@@ -9,3 +9,9 @@ export type Profile = {
     email: string,
     photo?: string
 }
+
+export type SignupData = {
+    email: string,
+    password: string,
+    passwordC?: string //password confirmation
+}

@@ -8,28 +8,26 @@ export default function ProfilePicture ({profile, setProfile}:
         setProfile: React.Dispatch<React.SetStateAction<Profile>>
     }
 ) {
-    //const [imageSrc, setImageSrc] = useState<string | null>(null);
-    //const [filename, setFilename] = useState<string | null>(null);
-    useEffect(()=> {
-        const key: string = formStorageKey('profile');
-        if(key) {
-            const item = localStorage.getItem(key);
-            if(item) {
-                const image_src = JSON.parse(item);
-                if(image_src) {
-                    setProfile(prev => ({...prev, photo: image_src}));
-                }
-            } 
-        }
-    }, []);
-    useEffect(()=> {
-        if(profile.photo) {
-            const key: string = formStorageKey('profile');
-            if(key) {
-                localStorage.setItem(key, JSON.stringify(profile.photo));
-            }
-        }
-    }, [profile.photo]);
+    // useEffect(()=> {
+    //     const key: string = formStorageKey('profile');
+    //     if(key) {
+    //         const item = localStorage.getItem(key);
+    //         if(item) {
+    //             const image_src = JSON.parse(item);
+    //             if(image_src) {
+    //                 setProfile(prev => ({...prev, photo: image_src}));
+    //             }
+    //         } 
+    //     }
+    // }, []);
+    // useEffect(()=> {
+    //     if(profile.photo) {
+    //         const key: string = formStorageKey('profile');
+    //         if(key) {
+    //             localStorage.setItem(key, JSON.stringify(profile.photo));
+    //         }
+    //     }
+    // }, [profile.photo]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
@@ -64,7 +62,7 @@ export default function ProfilePicture ({profile, setProfile}:
         event.preventDefault(); // Prevent default behavior to allow drop
     };
 
-    //console.log('ProfilePicture: ', imageSrc);
+    //console.log('Profile in ProfilePicture: ', profile);
     return (
         <div>
             <p>Profile picture</p>
@@ -86,7 +84,11 @@ export default function ProfilePicture ({profile, setProfile}:
                     <div className="profile-img">
                         <img src={profile.photo} alt='profile photo'/>
                     </div>
-                    :
+                : profile.firstname.length > 0 && profile.lastname.length > 0 ? 
+                    <div className="profile-img">
+                        <span>{profile.firstname[0].toUpperCase() + profile.lastname[0].toUpperCase()}</span>
+                    </div>
+                :
                     <label htmlFor="file-input" className="flex justify-center">
                         <img src={staticAsset('/images/icon-upload-image.svg')} alt='upload image icon'/>
                         <input 

@@ -69,6 +69,49 @@ nav .boxed {
   text-decoration: underline;
   color: #633CFF;
 }
+.login-card .invalid > label, .signup-card .invalid > label, .profile-card .invalid > label, .linkedit-card .invalid > label {
+  color: var(--color-red-700);
+}
+.login-card .invalid > input, .signup-card .invalid > input, .profile-card .invalid > input, .linkedit-card .invalid > input {
+  border-color: var(--color-red-700);
+}
+.login-card .error-invalid, .login-card .error-empty, .signup-card .error-invalid, .signup-card .error-empty, .profile-card .error-invalid, .profile-card .error-empty, .linkedit-card .error-invalid, .linkedit-card .error-empty {
+  display: none;
+  color: var(--color-red-700);
+}
+.login-card .invalid > .error-invalid, .signup-card .invalid > .error-invalid, .profile-card .invalid > .error-invalid, .linkedit-card .invalid > .error-invalid {
+  display: inline;
+}
+.login-card .empty > .error-empty, .signup-card .empty > .error-empty, .profile-card .empty > .error-empty, .linkedit-card .empty > .error-empty {
+  display: inline;
+}
+.login-card .signup-suggestion.invalid, .signup-card .signup-suggestion.invalid, .profile-card .signup-suggestion.invalid, .linkedit-card .signup-suggestion.invalid {
+  color: var(--color-red-700);
+}
+
+input[type=email] {
+  position: relative;
+  background-image: url("/images/icon-email.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 1.5rem;
+}
+
+input[type=password] {
+  position: relative;
+  background-image: url("/images/icon-password.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 1.5rem;
+}
+
+input[name=link-url] {
+  position: relative;
+  background-image: url("/images/icon-link.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 1.5rem;
+}
 
 .profile-img img {
   width: 104px;
@@ -76,6 +119,18 @@ nav .boxed {
   object-fit: cover;
   border-radius: 50%;
   border: solid 2pt #633CFF;
+}
+.profile-img span {
+  display: grid;
+  place-content: center;
+  width: 104px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border: solid 2pt #633CFF;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #633CFF;
 }
 
 .platform-entry > img {
@@ -85,6 +140,7 @@ nav .boxed {
 .mockup {
   padding-top: 2rem;
   position: relative;
+  display: none;
 }
 .mockup .mockup-entry {
   display: flex;
@@ -113,5 +169,21 @@ nav .boxed {
   align-items: center;
   justify-content: space-between;
   margin-block: 1rem;
+  padding-inline: 1rem;
   border-radius: 0.5rem;
+}
+.preview-container .icon-light {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(264deg) brightness(101%) contrast(102%);
+}
+.preview-container .icon-dark {
+  filter: brightness(0) saturate(100%) invert(0%) sepia(7%) saturate(2459%) hue-rotate(32deg) brightness(90%) contrast(106%);
+}
+
+@media only screen and (min-width: 64rem) {
+  .edit-page {
+    display: flex;
+  }
+  .edit-page .mockup {
+    display: block;
+  }
 }/*# sourceMappingURL=App.css.map */

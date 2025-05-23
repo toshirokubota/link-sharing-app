@@ -9,6 +9,7 @@ import ProfileDetails from './components/ProfileDetails';
 import Signup from './components/Signup';
 import { type LinkObject, type Profile } from './types';
 import { formStorageKey } from './lib';
+import HeaderPreview from './components/HeaderPreview';
 
 function App() {
   const [links, setLinks] = useState<LinkObject[]>([]);  
@@ -43,17 +44,22 @@ function App() {
   }, [links]);
   useEffect(()=>{
     //console.log('useEffect in App.tsx:', links)
-    const key = formStorageKey('profile');
-    console.log('profile useEffect in App.tsx:', key, links)
-    if(key) {
-      localStorage.setItem(key, JSON.stringify(profile));
+    if(profile.firstname.length > 0 && profile.lastname.length > 0 && profile.email.length > 0) {
+      const key = formStorageKey('profile');
+      console.log('profile useEffect in App.tsx:', profile)
+      if(key) {
+        localStorage.setItem(key, JSON.stringify(profile));
+      }
     }
   }, [profile]);
 
 
   return (
     <BrowserRouter basename="/link-sharing-app">
-      <Header logged={logged}/>
+      <Routes>
+        <Route path="/preview" element={<HeaderPreview links={links}/>}/>
+        <Route path="*" element={<Header logged={logged} />}/>
+      </Routes>
       <Routes>
         <Route path="/" element={<Login setLogged={setLogged}/>} />
         <Route path="/edit" element={<EditLinks links={links} setLinks={setLinks}/>} />

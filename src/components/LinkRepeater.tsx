@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from "react";
 import Select, { type SingleValue } from "react-select";
 import type { LinkObject } from "../types";
-import { linksPreset, presetLinkIcon, presetLinkURL, staticAsset } from "../lib";
+import { isValidURL, linksPreset, presetLinkIcon, presetLinkURL, staticAsset } from "../lib";
 
 export default function LinkRepeater(
     {index, link, links, setLinks, dndHandler}: 
@@ -14,7 +14,6 @@ export default function LinkRepeater(
     }) {
     const options = linksPreset.map(lk => (
         {
-
             value: lk.platform, 
             label: 
                     (<span style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
@@ -28,6 +27,7 @@ export default function LinkRepeater(
     const availableOptions = options.filter(op => !links.find(mk => mk.platform == op.value))
     const [selectedOption, setSelectedOption] = useState(
         options.find(option => option.value == link.platform))
+    const [urlError, setUrlError] = useState<boolean>(false);
 
     const handleUrlChange = (event: ChangeEvent)=> {
         const value = (event.target as HTMLInputElement).value;
@@ -36,7 +36,13 @@ export default function LinkRepeater(
             prev.map(lk => 
                 lk === link ? ({...lk, link: value}): lk));
     }
-
+    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        const value = (event.target as HTMLInputElement).value;
+        const baseUrl = selectedOption ? presetLinkURL.get(selectedOption.value): undefined;
+        if(!isValidURL(value) || (baseUrl && !value.startsWith(baseUrl))) {
+            setUrlError(true);
+        }
+    }
 
     const handlePlatformChange = (selected: SingleValue<{ label: React.JSX.Element; value: string }>) => {
         if(selected) {
@@ -59,7 +65,7 @@ export default function LinkRepeater(
                 <div 
                     draggable={true}
                     onDragStart={(event) => dndHandler.handleDragStart(event, index)}
-                    onDragOver={(event) => dndHandler.handleDragOver(event, index)} //(event) => handleDragOver(event)}
+                    onDragOver={(event) => dndHandler.handleDragOver(event)} //(event) => handleDragOver(event)}
                     onDrop={(event) => dndHandler.handleDrop(event, index)} //(event) => handleDrop(event)}
                 >
                     <svg className="inline-block mr-4"
@@ -80,15 +86,21 @@ export default function LinkRepeater(
                     options={availableOptions} 
                     value={selectedOption}
                     onChange={handlePlatformChange}/>
+                <div className={'url-section' + `${urlError ? ' invalid': ''}` + `${link.link.trim().length === 0 ? ' empty': ''}`}>
                 <label htmlFor="link-url">Link</label>
                 <input 
                     type="text" 
                     name="link-url" id="link-url"
                     value={link.link}
                     onChange={handleUrlChange}
+                    onBlur={handleBlur}
+                    onFocus={()=>{setUrlError(false)}}
                     placeholder={selectedOption && 'e.g. ' + presetLinkURL.get(selectedOption.value) + '/johnappleseed'}
                     className="mb-6"
                 />
+                <p className="error-empty">Can't be empty</p>
+                <p className="error-invalid">Please check the URL</p>
+                </div>
             </form>
 
         </div>

@@ -1,23 +1,45 @@
 import { useState, type ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { formStorageKey, isEmpty, isValidEmail } from "../lib";
+import type { SignupData } from "../types";
 
 export default function Login ({setLogged}:{setLogged: React.Dispatch<React.SetStateAction<boolean>>}) {
-    const [formData, setFormData] = useState({email:'', password:''});
+    const [formData, setFormData] = useState<SignupData>({email:'', password:''});
     const navigate = useNavigate();
+    const [error, setError] = useState({email: false, password: false, account: false, email_empty: false});
 
     const handleChange = (event: ChangeEvent)=> {
         const name = (event.target as HTMLInputElement).name;
         const value = (event.target as HTMLInputElement).value;
         if(name == 'email') {
-            setFormData(prev => ({...prev, name: value}));
+            setFormData(prev => ({...prev, email: value}));
         } else if(name == 'password') {
             setFormData(prev => ({...prev, password: value}));
         }
     }
-    const handleSubmit = (event: SubmitEvent) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setLogged(true);
-        navigate('/edit');
+        const item = localStorage.getItem(formStorageKey('signup'));
+        if(item) {
+            const signup: SignupData = JSON.parse(item);
+            if(signup.email === formData.email && signup.password === formData.password){
+                setLogged(true);
+                navigate('/edit');
+            } else {
+                if(isEmpty(signup.email) ) {
+                    setError(prev => ({...prev, email_empty: true}));
+                } 
+                if(!isValidEmail(formData.email) ) {
+                    setError(prev => ({...prev, email: true}));
+                } 
+                if(signup.password != formData.password) {
+                    setError(prev => ({...prev, password: true}));
+                }
+            }
+        } else {
+            setError(prev => ({...prev, account: true}))
+        }
+        console.log('handleSubmit', error, item, formData);
     }
 
     return (
@@ -25,29 +47,38 @@ export default function Login ({setLogged}:{setLogged: React.Dispatch<React.SetS
             <h1>Login</h1>
             <h2>Add your details below to get back into the app</h2>
             <form onSubmit={handleSubmit} className="login-form">
-                <label htmlFor="login-email">Email address</label>
-                <input 
-                    type="email" 
-                    name="email" 
-                    id="login-email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="e.g. alex@email.com"
-                    className="mb-6"
-                />
-                <label htmlFor="login-password">Password</label>
-                <input 
-                    type="password" 
-                    name="password" 
-                    id="login-password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Enter your password"
-                    className="mb-6"
-                />
+                <div className={"email-section" + `${error.email ? ' invalid': ''}` + `${error.email_empty ? ' empty': ''}`}>
+                    <label htmlFor="login-email">Email address</label>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        id="login-email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        onFocus={()=> {setError(prev=>({...prev, email:false, email_empty:false}))}}
+                        placeholder="e.g. alex@email.com"
+                        className="mb-6"
+                    />
+                    <p className='error-empty'>Can't be empty</p>
+                    <p className='error-invalid'>Invalid email address</p>
+                </div>
+                <div className={"password-section" + `${error.password ? ' invalid': ''}`}>
+                    <label htmlFor="login-password">Password</label>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        id="login-password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        onFocus={()=> {setError(prev=>({...prev, password:false}))}}
+                        placeholder="Enter your password"
+                        className="mb-6"
+                    />
+                    <p className='error-invalid'>Please check again</p>
+                </div>
                 <button>Login</button>
             </form>
-            <div className='text-center mt-10'>
+            <div className={'signup-suggestion text-center mt-10 ' + `${error.account ? 'invalid': ''}`}>
                 <p>Don't have an account? </p>                    
                 <Link to="/signUp" className="block">Create account</Link>
             </div>
