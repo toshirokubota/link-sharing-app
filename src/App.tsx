@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
-import HeaderEdit from "./components/HeaderEdit";
 import Login from "./components/Login";
 import EditLinks from './components/EditLinks';
 import PreviewLinks from './components/PreviewLinks';
@@ -9,8 +8,6 @@ import ProfileDetails from './components/ProfileDetails';
 import Signup from './components/Signup';
 import { type LinkObject, type Profile } from './types';
 import { formStorageKey } from './lib';
-import HeaderPreview from './components/HeaderPreview';
-import HeaderLogo from './components/HeaderLogo';
 
 function App() {
   const [links, setLinks] = useState<LinkObject[]>([]);  
@@ -59,11 +56,6 @@ function App() {
 
   return (
     <BrowserRouter basename="/link-sharing-app">
-      {/* <Routes>
-        <Route path="/edit" element={<HeaderEdit logged={logged} />}/>
-        <Route path="/profile" element={<HeaderEdit logged={logged} />}/>
-        <Route path="/preview" element={<HeaderPreview logged={logged} />}/>
-      </Routes> */}
       <Routes>
         <Route path="/" element={<Login setLogged={setLogged}/>} />
         <Route path="/edit" element={<EditLinks links={links} setLinks={setLinks} logged={logged}/>} />

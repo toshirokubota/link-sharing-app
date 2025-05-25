@@ -4,7 +4,6 @@ import type { LinkObject } from "../types";
 import LinkRepeater from "./LinkRepeater";
 import MockPreviewLinks from "./MockPreviewLinks";
 import HeaderEdit from "./HeaderEdit";
-import { ConfirmationModal } from "./ConfirmationModal";
 
 export default function EditLinks({links, setLinks, logged}:
     {
@@ -16,7 +15,6 @@ export default function EditLinks({links, setLinks, logged}:
   const [editedLinks, setEditedLinks] = useState<LinkObject[]>(links);
   const [dragging, setDragging] = useState(-1);
   const [dirty, setDirty] = useState(false);
-  const [modal, setModal] = useState(false);
 
   const handleDragStart = (_event:React.DragEvent, index:number) => {
     //_event.preventDefault();
@@ -52,7 +50,7 @@ export default function EditLinks({links, setLinks, logged}:
 
     return (
       <div className='edit-page'>
-        <HeaderEdit logged={logged} />
+        <HeaderEdit logged={logged} dirty={dirty}/>
         <div className='edit-container'>
         <MockPreviewLinks links={editedLinks}/>
         <div className="edit-card">
@@ -97,7 +95,6 @@ export default function EditLinks({links, setLinks, logged}:
           <button className='save' onClick={handleSave}>Save</button>
         </div>
         </div>
-        { modal && <ConfirmationModal handleCancel={()=>{}} handleContinue={()=>{}} />}
       </div>
     );
 }

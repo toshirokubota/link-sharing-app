@@ -257,6 +257,47 @@ input[name=link-url] {
   filter: brightness(0) saturate(100%) invert(0%) sepia(7%) saturate(2459%) hue-rotate(32deg) brightness(90%) contrast(106%);
 }
 
+.lightbox {
+  display: grid;
+  place-content: center;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(100, 100, 100, 0.85);
+  z-index: 2;
+  overflow: scroll;
+}
+
+.lightbox-modal {
+  display: block;
+  width: 25rem;
+  height: 15rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-900);
+}
+.lightbox-modal p {
+  text-align: center;
+  font-size: 1.25rem;
+}
+.lightbox-modal .modal-buttons {
+  margin-inline: auto;
+}
+.lightbox-modal button {
+  font-size: 1.25rem;
+  padding: 0.5rem 1rem;
+  margin: 2rem;
+  border-radius: 0.5rem;
+}
+.lightbox-modal .cancel-button {
+  border: solid 1pt var(--color-soft-blue);
+}
+.lightbox-modal .continue-button {
+  background-color: var(--color-soft-blue);
+}
+
 @media only screen and (min-width: 48rem) {
   .signup-page, .login-page {
     display: grid;

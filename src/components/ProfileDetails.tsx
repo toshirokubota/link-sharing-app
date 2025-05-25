@@ -15,11 +15,13 @@ export default function ProfileDetails({profile, setProfile, links, logged}:
 ) {
     const [formData, setFormData] = useState(profile);
     const [error, setError] = useState({firstname: false, lastname: false, email_empty: false, email: false});
+    const [dirty, setDirty] = useState<boolean>(false);
 
     const handleChange = (event: React.ChangeEvent)=> {
         const name2 = (event.target as HTMLInputElement).name;
         const value = (event.target as HTMLInputElement).value;
         setFormData(prev => ({...prev, [name2]: value}));
+        setDirty(true);
     }
     const handleSave = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -42,13 +44,14 @@ export default function ProfileDetails({profile, setProfile, links, logged}:
 
         if(bOK) {
             setProfile(formData);
+            setDirty(false);
         }
         //console.log('profile is saved.', profile);
     }
 
     return (
       <div className='profile-page'>
-        <HeaderEdit logged={logged} />
+        <HeaderEdit logged={logged} dirty={dirty}/>
         <div className='profile-container'>
         <MockPreviewLinks links={links}/>
         <div className="profile-card">
