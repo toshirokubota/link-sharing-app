@@ -23,7 +23,7 @@ export const presetLinkIcon = new Map<string,string>([
 
 export const presetLinkURL = new Map<string,string>([
     ['GitHub', 'http://www.github.com'],
-    ['YouTube', 'http://www.yourtube.com'],
+    ['YouTube', 'http://www.youtube.com'],
     ['LinkedIn', 'http://www.linkedin.com'],
     ['Stack Overflow','http://www.stackoverflow.com'],
     ['CodePen','http://www.codepen.com'],

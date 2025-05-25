@@ -1,6 +1,11 @@
 body {
     background-color: var(--color-gray-50);
 }
+// .main-container {
+//     display: grid;
+//     place-content: center;
+//     height: 100vh;
+// }
 
 h1 {
     font-size: 1.5rem;
@@ -9,12 +14,22 @@ h1 {
 h2 {
     font-size: 1rem;
 }
-// p {
-//     font-size: 1rem;
-// }
+span {
+  white-space: nowrap;
+}
+.rect {
+    border: solid 1pt var(--color-soft-blue);
+    border-radius: 8px;
+    //height: 3rem;
+    display: grid;
+    place-content: center;
+}
 
 header {
     background-color: var(--color-white);
+}
+header.logo {
+    background-color: var(--color-gray-50);
 }
 nav {
     display: flex;
@@ -23,24 +38,31 @@ nav {
     padding: 1rem 2rem;
     a {
         display: inline-block;
+        padding: 0.5rem;
+        border-radius: 4px;
+    }
+    a.current {
+        background-color: var(--color-gray-100);
     }
     div > a {
-        margin-inline: 2rem;
+        margin-inline: 0.5rem;
     }
     svg {
         display: inline-block;
     }
-    .boxed {
+    button {
+        width: 45%;
+        height: 3rem;
         display: grid;
         place-content: center;
-        width: 52px;
-        height: 52px;
-        border: solid 1pt #633CFF;
+        background-color: var(--color-soft-blue);
+        color: var(--color-white);
+        //padding: 0.5rem;
         border-radius: 8px;
     }
 }
 
-.login-card, .signup-card, .profile-card, .linkedit-card {
+.login-card, .signup-card, .profile-card, .edit-card {
     h2 {
         margin-bottom: 2rem;
     }
@@ -56,10 +78,16 @@ nav {
     }
     button {
         width: 100%;
-        background-color: #633CFF;
+        background-color: var(--color-soft-blue);
         color: var(--color-white);
         padding: 0.5rem;
         border-radius: 8px;
+    }
+    button.add-link {
+        background-color: transparent;
+        border: solid 1pt var(--color-soft-blue);
+        color: var(--color-soft-blue);
+        font-weight: 600;
     }
     button.button-text {
         width: fit-content;
@@ -70,7 +98,7 @@ nav {
     a {
         //display: block;
         text-decoration: underline;
-        color: #633CFF;
+        color: var(--color-soft-blue);
     }
 
     .invalid > label {
@@ -93,6 +121,58 @@ nav {
         color: var(--color-red-700);
     }
 }
+.profile-card, .edit-card {
+    margin: 1rem;
+    padding-inline: 1rem;
+    background-color: var(--color-white);
+}
+.link-repeater {
+    background-color: var(--color-gray-50);
+    padding: 0.5rem;
+    margin-block: 1rem;
+}
+.empty-link-card {
+    background-color: var(--color-gray-50);
+    padding: 2rem;
+    margin-block: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+    img {
+        height: 80px;
+    }
+}
+
+
+.profile-photo {
+    background-color: var(--color-gray-50);
+    padding: 0.5rem;
+    margin-block: 1rem;
+    .draggable {
+        background-color: var(--color-gray-200);
+        width: 150px;
+        height: 150px;
+        display: grid;
+        place-content: center;
+        margin-block: 1rem;
+        span {
+            color: var(--color-soft-blue);
+        }
+    }
+}
+.profile-card {
+    .form-inputs {
+        background-color: var(--color-gray-50);
+        padding: 0.5rem;
+        margin-block: 1rem;
+    }
+}
+
+
 input[type='email']{
     position: relative;
     background-image: url('/images/icon-email.svg');
@@ -121,7 +201,7 @@ input[name='link-url'] {
         aspect-ratio: 1;
         object-fit: cover;
         border-radius: 50%;
-        border: solid 2pt #633CFF
+        border: solid 2pt var(--color-soft-blue)
     }
     span {
         display: grid;
@@ -130,10 +210,10 @@ input[name='link-url'] {
         aspect-ratio: 1;
         object-fit: cover;
         border-radius: 50%;
-        border: solid 2pt #633CFF;
+        border: solid 2pt var(--color-soft-blue);
         font-size: 3rem;
         font-weight: bold;
-        color: #633CFF;
+        color: var(--color-soft-blue);
     }
 }
 .platform-entry > img {
@@ -159,7 +239,7 @@ input[name='link-url'] {
     }
 }
 
-.preview-container {
+.preview-card {
     width: 100%;
     padding: 3rem;
     display: flex;
@@ -184,12 +264,94 @@ input[name='link-url'] {
     }
 }
 
-@media only screen and (min-width: 64rem) {
-    .edit-page {
+@media only screen and (min-width: 48rem) {
+    .signup-page, .login-page {
+        display: grid;
+        place-content: center;
+        height: 100vh;
+        header {
+            justify-self: center;
+        }
+    }
+    .signup-card, .login-card {
+        background-color: var(--color-white);
+        width: 32rem;
+    }
+    .edit-container, .profile-container {
+        margin-top: 1rem;
+    }
+    .edit-card, .profile-card {
+        background-color: var(--color-white);
+    }
+    .profile-photo {
         display: flex;
+        align-items: center;
+        justify-content: space-between;
+        p {
+            width: 20%;
+        }
+    }
+    .mockup {
+        background-color: var(--color-white);
+    }
+    .preview-card {
+        background-color: white;
+        width: 28rem;
+        margin-inline: auto;
+        position: relative;
+        top: -10rem;
+        border-radius: 2rem;
+    }
+    header.preview {
+        height: 23rem;
+        background-color: var(--color-soft-blue);
+        border-radius: 0 0 4rem 4rem;
+        nav {
+            background-color: white;
+            margin: 2rem;
+            position: relative;
+            top: 2rem;
+            border-radius: 0.5rem;
+            .rect, button {
+                width:fit-content;
+                padding-inline: 1rem;
+            }
+        }
+    }
+    nav div > a {
+        margin-inline: 1rem;
+    }
+    button.save {
+        display: block;
+        width: 6rem;
+        margin-left: auto;
+        margin-top: 1rem;
+    }
+    .empty-link-card {
+        padding: 4rem;
+        h2 {
+            font-size: 2rem;
+        }
+        img {
+            height: 160px;
+        }
+    }
+
+}
+
+@media only screen and (min-width: 64rem) {
+    .edit-container, .profile-container {
+        display: flex;
+        gap: 1rem;
 
         .mockup {
             display: block;
+            padding-inline: 5rem;
+
+        }
+        .edit-card, .profile-card {
+            flex: 1;
+            margin: 0;
         }
     }
 }

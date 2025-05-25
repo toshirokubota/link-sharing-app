@@ -3,15 +3,20 @@ import { staticAsset } from "../lib";
 import type { LinkObject } from "../types";
 import LinkRepeater from "./LinkRepeater";
 import MockPreviewLinks from "./MockPreviewLinks";
+import HeaderEdit from "./HeaderEdit";
+import { ConfirmationModal } from "./ConfirmationModal";
 
-export default function EditLinks({links, setLinks}:
+export default function EditLinks({links, setLinks, logged}:
     {
       links: LinkObject[],
       setLinks: React.Dispatch<React.SetStateAction<LinkObject[]>>
+      logged: boolean
     }
 ) {
   const [editedLinks, setEditedLinks] = useState<LinkObject[]>(links);
   const [dragging, setDragging] = useState(-1);
+  const [dirty, setDirty] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const handleDragStart = (_event:React.DragEvent, index:number) => {
     //_event.preventDefault();
@@ -29,6 +34,7 @@ export default function EditLinks({links, setLinks}:
       newItems.splice(index, 0, draggedItem);
       setEditedLinks(newItems);
       setDragging(-1);
+      setDirty(true);
       //console.log('links reordered.', index);
     }
     //console.log('drag ended.', index);
@@ -36,27 +42,31 @@ export default function EditLinks({links, setLinks}:
 
   const addLink = () => {
     setEditedLinks(prev => [{platform: '', link: ''}, ...prev]);
+    setDirty(true);
     //console.log(editedLinks);
   }
   const handleSave = () => {
     setLinks(editedLinks);
+    setDirty(false);
   }
 
     return (
       <div className='edit-page'>
+        <HeaderEdit logged={logged} />
+        <div className='edit-container'>
         <MockPreviewLinks links={editedLinks}/>
-        <div className="linkedit-card p-8">
+        <div className="edit-card">
           <h1>Customize your links</h1>
           <h2>
             Add/edit/remove links below and then share all your profiles with the
             world!
           </h2>
 
-          <button onClick={addLink}>+ Add new link</button>
+          <button className='add-link' onClick={addLink}>+ Add new link</button>
 
           {
             editedLinks.length === 0 ?
-            <div>
+            <div className='empty-link-card'>
               <img
                 src={staticAsset("/images/illustration-empty.svg")}
                 alt="illustrates empty link"
@@ -83,8 +93,11 @@ export default function EditLinks({links, setLinks}:
               }
             </div>
           }
-          <button onClick={handleSave}>Save</button>
+          <hr className="my-6 border-t-2 border-t-gray-200"></hr>
+          <button className='save' onClick={handleSave}>Save</button>
         </div>
+        </div>
+        { modal && <ConfirmationModal handleCancel={()=>{}} handleContinue={()=>{}} />}
       </div>
     );
 }

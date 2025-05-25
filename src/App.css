@@ -11,8 +11,23 @@ h2 {
   font-size: 1rem;
 }
 
+span {
+  white-space: nowrap;
+}
+
+.rect {
+  border: solid 1pt var(--color-soft-blue);
+  border-radius: 8px;
+  display: grid;
+  place-content: center;
+}
+
 header {
   background-color: var(--color-white);
+}
+
+header.logo {
+  background-color: var(--color-gray-50);
 }
 
 nav {
@@ -23,70 +38,133 @@ nav {
 }
 nav a {
   display: inline-block;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+nav a.current {
+  background-color: var(--color-gray-100);
 }
 nav div > a {
-  margin-inline: 2rem;
+  margin-inline: 0.5rem;
 }
 nav svg {
   display: inline-block;
 }
-nav .boxed {
+nav button {
+  width: 45%;
+  height: 3rem;
   display: grid;
   place-content: center;
-  width: 52px;
-  height: 52px;
-  border: solid 1pt #633CFF;
+  background-color: var(--color-soft-blue);
+  color: var(--color-white);
   border-radius: 8px;
 }
 
-.login-card h2, .signup-card h2, .profile-card h2, .linkedit-card h2 {
+.login-card h2, .signup-card h2, .profile-card h2, .edit-card h2 {
   margin-bottom: 2rem;
 }
-.login-card label, .signup-card label, .profile-card label, .linkedit-card label {
+.login-card label, .signup-card label, .profile-card label, .edit-card label {
   width: 100%;
   font-size: 0.75rem;
   color: var(--color-gray-900);
 }
-.login-card input, .login-card select, .signup-card input, .signup-card select, .profile-card input, .profile-card select, .linkedit-card input, .linkedit-card select {
+.login-card input, .login-card select, .signup-card input, .signup-card select, .profile-card input, .profile-card select, .edit-card input, .edit-card select {
   width: 100%;
   border: solid 1pt var(--color-gray-200);
   padding: 0.5rem;
 }
-.login-card button, .signup-card button, .profile-card button, .linkedit-card button {
+.login-card button, .signup-card button, .profile-card button, .edit-card button {
   width: 100%;
-  background-color: #633CFF;
+  background-color: var(--color-soft-blue);
   color: var(--color-white);
   padding: 0.5rem;
   border-radius: 8px;
 }
-.login-card button.button-text, .signup-card button.button-text, .profile-card button.button-text, .linkedit-card button.button-text {
+.login-card button.add-link, .signup-card button.add-link, .profile-card button.add-link, .edit-card button.add-link {
+  background-color: transparent;
+  border: solid 1pt var(--color-soft-blue);
+  color: var(--color-soft-blue);
+  font-weight: 600;
+}
+.login-card button.button-text, .signup-card button.button-text, .profile-card button.button-text, .edit-card button.button-text {
   width: fit-content;
   background-color: transparent;
   color: inherit;
   border: none;
 }
-.login-card a, .signup-card a, .profile-card a, .linkedit-card a {
+.login-card a, .signup-card a, .profile-card a, .edit-card a {
   text-decoration: underline;
-  color: #633CFF;
+  color: var(--color-soft-blue);
 }
-.login-card .invalid > label, .signup-card .invalid > label, .profile-card .invalid > label, .linkedit-card .invalid > label {
+.login-card .invalid > label, .signup-card .invalid > label, .profile-card .invalid > label, .edit-card .invalid > label {
   color: var(--color-red-700);
 }
-.login-card .invalid > input, .signup-card .invalid > input, .profile-card .invalid > input, .linkedit-card .invalid > input {
+.login-card .invalid > input, .signup-card .invalid > input, .profile-card .invalid > input, .edit-card .invalid > input {
   border-color: var(--color-red-700);
 }
-.login-card .error-invalid, .login-card .error-empty, .signup-card .error-invalid, .signup-card .error-empty, .profile-card .error-invalid, .profile-card .error-empty, .linkedit-card .error-invalid, .linkedit-card .error-empty {
+.login-card .error-invalid, .login-card .error-empty, .signup-card .error-invalid, .signup-card .error-empty, .profile-card .error-invalid, .profile-card .error-empty, .edit-card .error-invalid, .edit-card .error-empty {
   display: none;
   color: var(--color-red-700);
 }
-.login-card .invalid > .error-invalid, .signup-card .invalid > .error-invalid, .profile-card .invalid > .error-invalid, .linkedit-card .invalid > .error-invalid {
+.login-card .invalid > .error-invalid, .signup-card .invalid > .error-invalid, .profile-card .invalid > .error-invalid, .edit-card .invalid > .error-invalid {
   display: inline;
 }
-.login-card .empty > .error-empty, .signup-card .empty > .error-empty, .profile-card .empty > .error-empty, .linkedit-card .empty > .error-empty {
+.login-card .empty > .error-empty, .signup-card .empty > .error-empty, .profile-card .empty > .error-empty, .edit-card .empty > .error-empty {
   display: inline;
 }
-.login-card .signup-suggestion.invalid, .signup-card .signup-suggestion.invalid, .profile-card .signup-suggestion.invalid, .linkedit-card .signup-suggestion.invalid {
+.login-card .signup-suggestion.invalid, .signup-card .signup-suggestion.invalid, .profile-card .signup-suggestion.invalid, .edit-card .signup-suggestion.invalid {
   color: var(--color-red-700);
+}
+
+.profile-card, .edit-card {
+  margin: 1rem;
+  padding-inline: 1rem;
+  background-color: var(--color-white);
+}
+
+.link-repeater {
+  background-color: var(--color-gray-50);
+  padding: 0.5rem;
+  margin-block: 1rem;
+}
+
+.empty-link-card {
+  background-color: var(--color-gray-50);
+  padding: 2rem;
+  margin-block: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.empty-link-card h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.empty-link-card img {
+  height: 80px;
+}
+
+.profile-photo {
+  background-color: var(--color-gray-50);
+  padding: 0.5rem;
+  margin-block: 1rem;
+}
+.profile-photo .draggable {
+  background-color: var(--color-gray-200);
+  width: 150px;
+  height: 150px;
+  display: grid;
+  place-content: center;
+  margin-block: 1rem;
+}
+.profile-photo .draggable span {
+  color: var(--color-soft-blue);
+}
+
+.profile-card .form-inputs {
+  background-color: var(--color-gray-50);
+  padding: 0.5rem;
+  margin-block: 1rem;
 }
 
 input[type=email] {
@@ -118,7 +196,7 @@ input[name=link-url] {
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 50%;
-  border: solid 2pt #633CFF;
+  border: solid 2pt var(--color-soft-blue);
 }
 .profile-img span {
   display: grid;
@@ -127,10 +205,10 @@ input[name=link-url] {
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 50%;
-  border: solid 2pt #633CFF;
+  border: solid 2pt var(--color-soft-blue);
   font-size: 3rem;
   font-weight: bold;
-  color: #633CFF;
+  color: var(--color-soft-blue);
 }
 
 .platform-entry > img {
@@ -155,14 +233,14 @@ input[name=link-url] {
   border-radius: 0.5rem;
 }
 
-.preview-container {
+.preview-card {
   width: 100%;
   padding: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.preview-container .preview-entry {
+.preview-card .preview-entry {
   width: 100%;
   height: 3.5rem;
   display: flex;
@@ -172,18 +250,97 @@ input[name=link-url] {
   padding-inline: 1rem;
   border-radius: 0.5rem;
 }
-.preview-container .icon-light {
+.preview-card .icon-light {
   filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(264deg) brightness(101%) contrast(102%);
 }
-.preview-container .icon-dark {
+.preview-card .icon-dark {
   filter: brightness(0) saturate(100%) invert(0%) sepia(7%) saturate(2459%) hue-rotate(32deg) brightness(90%) contrast(106%);
 }
 
-@media only screen and (min-width: 64rem) {
-  .edit-page {
-    display: flex;
+@media only screen and (min-width: 48rem) {
+  .signup-page, .login-page {
+    display: grid;
+    place-content: center;
+    height: 100vh;
   }
-  .edit-page .mockup {
+  .signup-page header, .login-page header {
+    justify-self: center;
+  }
+  .signup-card, .login-card {
+    background-color: var(--color-white);
+    width: 32rem;
+  }
+  .edit-container, .profile-container {
+    margin-top: 1rem;
+  }
+  .edit-card, .profile-card {
+    background-color: var(--color-white);
+  }
+  .profile-photo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .profile-photo p {
+    width: 20%;
+  }
+  .mockup {
+    background-color: var(--color-white);
+  }
+  .preview-card {
+    background-color: white;
+    width: 28rem;
+    margin-inline: auto;
+    position: relative;
+    top: -10rem;
+    border-radius: 2rem;
+  }
+  header.preview {
+    height: 23rem;
+    background-color: var(--color-soft-blue);
+    border-radius: 0 0 4rem 4rem;
+  }
+  header.preview nav {
+    background-color: white;
+    margin: 2rem;
+    position: relative;
+    top: 2rem;
+    border-radius: 0.5rem;
+  }
+  header.preview nav .rect, header.preview nav button {
+    width: fit-content;
+    padding-inline: 1rem;
+  }
+  nav div > a {
+    margin-inline: 1rem;
+  }
+  button.save {
     display: block;
+    width: 6rem;
+    margin-left: auto;
+    margin-top: 1rem;
+  }
+  .empty-link-card {
+    padding: 4rem;
+  }
+  .empty-link-card h2 {
+    font-size: 2rem;
+  }
+  .empty-link-card img {
+    height: 160px;
+  }
+}
+@media only screen and (min-width: 64rem) {
+  .edit-container, .profile-container {
+    display: flex;
+    gap: 1rem;
+  }
+  .edit-container .mockup, .profile-container .mockup {
+    display: block;
+    padding-inline: 5rem;
+  }
+  .edit-container .edit-card, .edit-container .profile-card, .profile-container .edit-card, .profile-container .profile-card {
+    flex: 1;
+    margin: 0;
   }
 }/*# sourceMappingURL=App.css.map */

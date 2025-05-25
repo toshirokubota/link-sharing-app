@@ -37,10 +37,10 @@ export default function HeaderPreview({links}: {links: LinkObject[]}) {
     }
     
     return (
-        <header className="w-full h-20">
+        <header className="preview w-full h-20">
         
                 <nav>
-                    <Link to="/edit">Back to Editor</Link>
+                    <Link to="/edit" className="rect">Back to Editor</Link>
                     <button onClick={copyToClipboard}>Share Link</button>
                 </nav>
                 <ToastContainer />

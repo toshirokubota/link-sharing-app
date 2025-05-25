@@ -1,5 +1,6 @@
 import { presetLinkColor, presetLinkIcon, staticAsset } from "../lib";
 import type { LinkObject, Profile } from "../types";
+import HeaderPreview from "./HeaderPreview";
 
 export default function PreviewLinks({links, profile}: 
     {
@@ -9,7 +10,9 @@ export default function PreviewLinks({links, profile}:
 
     return (
         // <img src={staticAsset('/images/illustration-phone-mockup.svg')} alt="phone mockup"/>
-        <div className="preview-container">
+        <div className="preview-page">
+            <HeaderPreview links={links} />
+            <div className="preview-card">
             {
                 profile.photo ? 
                     <div className="profile-img">
@@ -17,12 +20,11 @@ export default function PreviewLinks({links, profile}:
                     </div>
                     :            
                     <div className="profile-img">
-                        <span>{profile.firstname.length > 0 ? profile.firstname[0].toUpperCase(): '?'}</span>
-                        <span>{profile.lastname.length > 0 ? profile.lastname[0].toUpperCase(): '?'}</span>
+                        <span>{profile.firstname.length > 0 && profile.lastname.length > 0 ? profile.firstname[0].toUpperCase() + profile.lastname[0].toUpperCase(): '??'}</span>
                     </div>
             }
             <p className='text-3xl font-bold align-middle my-4'>{profile.firstname} {profile.lastname}</p>
-            <p className='text-xs align-middle my-4'>{profile.email}</p>
+            <p className='text-base align-middle my-4'>{profile.email}</p>
             {                
                 links.map((k) => 
                     <div key={k.platform} 
@@ -47,6 +49,7 @@ export default function PreviewLinks({links, profile}:
                     
                 )
             }        
+            </div>
             </div>
     )
 }

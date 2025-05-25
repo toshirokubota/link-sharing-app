@@ -19,7 +19,7 @@ export default function MockPreviewLinks({links}: {links: LinkObject[]}) {
                             <img 
                                 className='inline-block mx-4'
                                 src={staticAsset('/images/' + presetLinkIcon.get(k.platform))} 
-                                alt={k.platform + ' logo'} 
+                                alt=' ' 
                                 style={{color: presetLinkColor.get(k.platform)?.color}}/>
                             <span>{k.platform}</span>
                         </div>

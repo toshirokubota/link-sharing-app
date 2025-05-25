@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
-import Header from "./components/Header";
+import HeaderEdit from "./components/HeaderEdit";
 import Login from "./components/Login";
 import EditLinks from './components/EditLinks';
 import PreviewLinks from './components/PreviewLinks';
@@ -10,6 +10,7 @@ import Signup from './components/Signup';
 import { type LinkObject, type Profile } from './types';
 import { formStorageKey } from './lib';
 import HeaderPreview from './components/HeaderPreview';
+import HeaderLogo from './components/HeaderLogo';
 
 function App() {
   const [links, setLinks] = useState<LinkObject[]>([]);  
@@ -17,6 +18,7 @@ function App() {
   const [logged, setLogged] = useState(false);
 
   useEffect(()=>{
+    if(logged) {
       const link_key = formStorageKey('links');
       if(link_key) {
         const item = localStorage.getItem(link_key);
@@ -31,7 +33,8 @@ function App() {
           setProfile(JSON.parse(item));
         }
       }
-  }, []);
+    }
+  }, [logged]);
   useEffect(()=>{
     //console.log('useEffect in App.tsx:', links)
     if(links.length > 0) {
@@ -56,14 +59,15 @@ function App() {
 
   return (
     <BrowserRouter basename="/link-sharing-app">
-      <Routes>
-        <Route path="/preview" element={<HeaderPreview links={links}/>}/>
-        <Route path="*" element={<Header logged={logged} />}/>
-      </Routes>
+      {/* <Routes>
+        <Route path="/edit" element={<HeaderEdit logged={logged} />}/>
+        <Route path="/profile" element={<HeaderEdit logged={logged} />}/>
+        <Route path="/preview" element={<HeaderPreview logged={logged} />}/>
+      </Routes> */}
       <Routes>
         <Route path="/" element={<Login setLogged={setLogged}/>} />
-        <Route path="/edit" element={<EditLinks links={links} setLinks={setLinks}/>} />
-        <Route path="/profile" element={<ProfileDetails profile={profile} setProfile={setProfile}/>} />
+        <Route path="/edit" element={<EditLinks links={links} setLinks={setLinks} logged={logged}/>} />
+        <Route path="/profile" element={<ProfileDetails profile={profile} setProfile={setProfile} links={links} logged={logged}/>} />
         <Route path="/preview" element={<PreviewLinks links={links} profile={profile}/>} />
         <Route path="/signUp" element={<Signup />} />
       </Routes>

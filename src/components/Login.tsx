@@ -2,6 +2,7 @@ import { useState, type ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { formStorageKey, isEmpty, isValidEmail } from "../lib";
 import type { SignupData } from "../types";
+import HeaderLogo from "./HeaderLogo";
 
 export default function Login ({setLogged}:{setLogged: React.Dispatch<React.SetStateAction<boolean>>}) {
     const [formData, setFormData] = useState<SignupData>({email:'', password:''});
@@ -43,7 +44,9 @@ export default function Login ({setLogged}:{setLogged: React.Dispatch<React.SetS
     }
 
     return (
-        <div className='login-card p-8'>
+        <div className='login-page'>
+            <HeaderLogo />
+            <div className='login-card p-8'>
             <h1>Login</h1>
             <h2>Add your details below to get back into the app</h2>
             <form onSubmit={handleSubmit} className="login-form">
@@ -81,6 +84,7 @@ export default function Login ({setLogged}:{setLogged: React.Dispatch<React.SetS
             <div className={'signup-suggestion text-center mt-10 ' + `${error.account ? 'invalid': ''}`}>
                 <p>Don't have an account? </p>                    
                 <Link to="/signUp" className="block">Create account</Link>
+            </div>
             </div>
         </div>
     )
