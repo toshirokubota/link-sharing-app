@@ -102,7 +102,8 @@ export async function getLinks(user_id: number): Promise<LinkObject[]> {
       if (error) {
         throw error;
       } else {
-        return data.map(lk => ({platform: lk.platform, link: lk.link, user_id: lk.user_id}));
+        console.log('getLinks', data, error);
+        return data.map(lk => ({platform: lk.platform, link: lk.link, user_id: lk.user_id, link_id: lk.id}));
       }
     } catch (error) {
         console.error('Error getting links: ', error);

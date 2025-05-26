@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { staticAsset } from "../lib";
 import type { LinkObject } from "../types";
 import LinkRepeater from "./LinkRepeater";
@@ -12,9 +12,14 @@ export default function EditLinks({links, setLinks, userId}:
       userId: number
     }
 ) {
-  const [editedLinks, setEditedLinks] = useState<LinkObject[]>(links);
+  const [editedLinks, setEditedLinks] = useState<LinkObject[]>([]);
   const [dragging, setDragging] = useState(-1);
   const [dirty, setDirty] = useState(false);
+
+  useEffect(() => {
+    //console.log("Links changed in EditLinks:", links, editedLinks);
+    setEditedLinks(links);
+  }, [links]);
 
   const handleDragStart = (_event:React.DragEvent, index:number) => {
     //_event.preventDefault();

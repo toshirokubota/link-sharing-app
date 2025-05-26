@@ -41,8 +41,19 @@ nav a {
   padding: 0.5rem;
   border-radius: 4px;
 }
+nav a:hover, nav afocus {
+  color: var(--color-soft-blue);
+  opacity: 0.75;
+}
+nav a:hover svg path, nav afocus svg path {
+  fill: var(--color-soft-blue);
+}
 nav a.current {
   background-color: var(--color-gray-100);
+  color: var(--color-soft-blue);
+}
+nav a.current svg path {
+  fill: var(--color-soft-blue);
 }
 nav div > a {
   margin-inline: 0.5rem;
@@ -79,6 +90,10 @@ nav button {
   color: var(--color-white);
   padding: 0.5rem;
   border-radius: 8px;
+}
+.login-card button:hover, .login-card button:focus, .signup-card button:hover, .signup-card button:focus, .profile-card button:hover, .profile-card button:focus, .edit-card button:hover, .edit-card button:focus {
+  cursor: pointer;
+  opacity: 0.5;
 }
 .login-card button.add-link, .signup-card button.add-link, .profile-card button.add-link, .edit-card button.add-link {
   background-color: transparent;
@@ -118,7 +133,7 @@ nav button {
 
 .profile-card, .edit-card {
   margin: 1rem;
-  padding-inline: 1rem;
+  padding: 1rem;
   background-color: var(--color-white);
 }
 
@@ -296,6 +311,7 @@ input[name=link-url] {
 }
 .lightbox-modal .continue-button {
   background-color: var(--color-soft-blue);
+  color: var(--color-white);
 }
 
 @media only screen and (min-width: 48rem) {

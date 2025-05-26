@@ -4,13 +4,13 @@ import { type SignupData } from "../types";
 import { formStorageKey, isEmpty, isValidEmail } from "../lib";
 import HeaderLogo from "./HeaderLogo";
 import { addUser } from "../lib/DB";
-import bcrypt from "bcryptjs";
 
-export default function Signup ({setUserId}: {setUserId: React.Dispatch<React.SetStateAction<number>>}) {
+export default function Signup () {
     const [formData, setFormData] = useState<SignupData>({email:'', password:'', passwordC: ''});
     const navigate = useNavigate();
     const [error, setError] = useState({email: false, password: false, mismatch: false, email_empty: false});
 
+    const supabase_enabled = import.meta.env.VITE_SUPABASE_ENABLED === 'true';
 
     const handleChange = (event: ChangeEvent)=> {
         const name = (event.target as HTMLInputElement).name;
@@ -44,9 +44,12 @@ export default function Signup ({setUserId}: {setUserId: React.Dispatch<React.Se
             bOk = false;
         }
         if(bOk) {
-            //localStorage.setItem(formStorageKey('signup'), JSON.stringify(formData));
-            await addUser(formData.email, formData.password);
-             //setUserId(userId);
+            if(supabase_enabled) {
+                await addUser(formData.email, formData.password);
+            } else {
+                localStorage.setItem(formStorageKey('signup'), JSON.stringify(formData));
+                //setUserId(userId);
+            }
             navigate('/');
         }        
     }

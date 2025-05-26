@@ -4,11 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import type { SignupData } from "../types";
 import HeaderLogo from "./HeaderLogo";
 import { verifyUser } from "../lib/DB";
+import { formStorageKey, isEmpty, isValidEmail } from "../lib";
 
 export default function Login ({setUserId}:{setUserId: React.Dispatch<React.SetStateAction<number>>}) {
     const [formData, setFormData] = useState<SignupData>({email:'', password:''});
     const navigate = useNavigate();
     const [error, setError] = useState({email: false, password: false, account: false, email_empty: false});
+    const supabase_enabled = import.meta.env.VITE_SUPABASE_ENABLED;
 
     const handleChange = (event: ChangeEvent)=> {
         const name = (event.target as HTMLInputElement).name;
@@ -21,33 +23,45 @@ export default function Login ({setUserId}:{setUserId: React.Dispatch<React.SetS
     }
     async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        const userId = await verifyUser(formData.email, formData.password);
-        if(userId && userId >= 0) {
-            setUserId(userId);
-            navigate('/edit');
+        if(supabase_enabled) {
+            const userId = await verifyUser(formData.email, formData.password);
+            if(userId && userId >= 0) {
+                setUserId(userId);
+                navigate('/edit');
+            } else {
+                if(isEmpty(formData.email) ) {
+                    setError(prev => ({...prev, email_empty: true}));
+                } 
+                if(!isValidEmail(formData.email) ) {
+                    setError(prev => ({...prev, email: true}));
+                } 
+                if(userId < 0) {
+                    setError(prev => ({...prev, password: true}));
+                }
+            }
+        } else {
+            const item = localStorage.getItem(formStorageKey('signup'));
+            if(item) {
+                const signup: SignupData = JSON.parse(item);
+                if(signup.email === formData.email && signup.password === formData.password){
+                    setUserId(1);
+                    navigate('/edit');
+                } else {
+                    if(isEmpty(signup.email) ) {
+                        setError(prev => ({...prev, email_empty: true}));
+                    } 
+                    if(!isValidEmail(formData.email) ) {
+                        setError(prev => ({...prev, email: true}));
+                    } 
+                    if(signup.password != formData.password) {
+                        setError(prev => ({...prev, password: true}));
+                    }
+                }
+            } else {
+                setError(prev => ({...prev, account: true}))
+            }
+            console.log('handleSubmit', error, item, formData);
         }
-
-        // const item = localStorage.getItem(formStorageKey('signup'));
-        // if(item) {
-        //     const signup: SignupData = JSON.parse(item);
-        //     if(signup.email === formData.email && signup.password === formData.password){
-        //         setLogged(true);
-        //         navigate('/edit');
-        //     } else {
-        //         if(isEmpty(signup.email) ) {
-        //             setError(prev => ({...prev, email_empty: true}));
-        //         } 
-        //         if(!isValidEmail(formData.email) ) {
-        //             setError(prev => ({...prev, email: true}));
-        //         } 
-        //         if(signup.password != formData.password) {
-        //             setError(prev => ({...prev, password: true}));
-        //         }
-        //     }
-        // } else {
-        //     setError(prev => ({...prev, account: true}))
-        // }
-        // console.log('handleSubmit', error, item, formData);
     }
 
     return (
