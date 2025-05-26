@@ -67,7 +67,7 @@ export default function ProfileDetails({profile, setProfile, links, logged}:
                         type="text" 
                         id="firstname" 
                         name="firstname" 
-                        value={profile.firstname}
+                        value={formData.firstname}
                         onChange={handleChange}
                         onFocus={()=> {setError(prev => ({...prev, firstname: false}))}}
                         placeholder="e.g. John"
@@ -80,7 +80,7 @@ export default function ProfileDetails({profile, setProfile, links, logged}:
                         type="text" 
                         id="lastname" 
                         name="lastname" 
-                        value={profile.lastname}
+                        value={formData.lastname}
                         onChange={handleChange}
                         onFocus={()=> {setError(prev => ({...prev, lastname: false}))}}
                         placeholder="e.g. Appleseed"
@@ -93,7 +93,7 @@ export default function ProfileDetails({profile, setProfile, links, logged}:
                         type="email" 
                         id="email" 
                         name="email" 
-                        value={profile.email}
+                        value={formData.email}
                         onChange={handleChange}
                         onFocus={()=> {setError(prev => ({...prev, email: false, email_empty:false}))}}
                         placeholder="e.g. email@example.com"

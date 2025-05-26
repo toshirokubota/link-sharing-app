@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { type SignupData } from "../types";
 import { formStorageKey, isEmpty, isValidEmail } from "../lib";
 import HeaderLogo from "./HeaderLogo";
+import { addUser } from "../lib/DB";
+import bcrypt from "bcryptjs";
 
-export default function Signup () {
+export default function Signup ({setUserId}: {setUserId: React.Dispatch<React.SetStateAction<number>>}) {
     const [formData, setFormData] = useState<SignupData>({email:'', password:'', passwordC: ''});
     const navigate = useNavigate();
     const [error, setError] = useState({email: false, password: false, mismatch: false, email_empty: false});
@@ -22,7 +24,7 @@ export default function Signup () {
         }
 
     }
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         let bOk = true;
         if(isEmpty(formData.email) ) {
@@ -42,7 +44,9 @@ export default function Signup () {
             bOk = false;
         }
         if(bOk) {
-            localStorage.setItem(formStorageKey('signup'), JSON.stringify(formData));
+            //localStorage.setItem(formStorageKey('signup'), JSON.stringify(formData));
+            await addUser(formData.email, formData.password);
+             //setUserId(userId);
             navigate('/');
         }        
     }

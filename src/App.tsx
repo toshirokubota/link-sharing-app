@@ -7,61 +7,100 @@ import PreviewLinks from './components/PreviewLinks';
 import ProfileDetails from './components/ProfileDetails';
 import Signup from './components/Signup';
 import { type LinkObject, type Profile } from './types';
-import { formStorageKey } from './lib';
+//import { formStorageKey } from './lib';
+import { addNewLink, getLinks, getProfile, updateLink, updateProfile } from './lib/DB';
 
 function App() {
   const [links, setLinks] = useState<LinkObject[]>([]);  
   const [profile, setProfile] = useState<Profile>({firstname: '', lastname: '', email:''})
-  const [logged, setLogged] = useState(false);
+  const [userId, setUserId] = useState(-1);
 
-  useEffect(()=>{
-    if(logged) {
-      const link_key = formStorageKey('links');
-      if(link_key) {
-        const item = localStorage.getItem(link_key);
-        if(item) {
-          setLinks(JSON.parse(item));
+  useEffect( () => {
+    if(userId >= 0) {
+      const _getLinks = async () => {
+        const links = await getLinks(userId);
+        setLinks(links);
+      };
+      _getLinks();
+
+      const _getProfile = async () => {
+        const profile = await getProfile(userId);
+        if(profile) {
+          setProfile(profile);
         }
       }
-      const profile_key = formStorageKey('profile');
-      if(profile_key) {
-        const item = localStorage.getItem(profile_key);
-        if(item) {
-          setProfile(JSON.parse(item));
-        }
-      }
+      _getProfile();
+
+      // const link_key = formStorageKey('links');
+      // if(link_key) {
+      //   const item = localStorage.getItem(link_key);
+      //   if(item) {
+      //     setLinks(JSON.parse(item));
+      //   }
+      // }
+      // const profile_key = formStorageKey('profile');
+      // if(profile_key) {
+      //   const item = localStorage.getItem(profile_key);
+      //   if(item) {
+      //     setProfile(JSON.parse(item));
+      //   }
+      // }
     }
-  }, [logged]);
+  }, [userId]);
+  
   useEffect(()=>{
+    if(userId >= 0) {
+      async function _insertNew() {
+        let dirty = false;
+        for(let i=0; i<links.length; ++i) {
+          let link = links[i];
+          console.log('in useEffect of App: update(): link = ', link)
+          if(!link.link_id) {
+            link = await addNewLink(link, i + 1);
+            dirty = true;
+          } else {
+            await updateLink(link, i + 1)
+          }
+        }
+        if(dirty) {
+          setLinks(links);
+        }
+      }
+      _insertNew();
+      //updateLinks(links);
+    }
     //console.log('useEffect in App.tsx:', links)
-    if(links.length > 0) {
-      const key = formStorageKey('links');
-      //console.log('useEffect in App.tsx:', key, links)
-      if(key) {
-        localStorage.setItem(key, JSON.stringify(links));
-      }
-    }
+    // if(links.length > 0) {
+    //   const key = formStorageKey('links');
+    //   //console.log('useEffect in App.tsx:', key, links)
+    //   if(key) {
+    //     localStorage.setItem(key, JSON.stringify(links));
+    //   }
+    // }
   }, [links]);
-  useEffect(()=>{
-    //console.log('useEffect in App.tsx:', links)
-    if(profile.firstname.length > 0 && profile.lastname.length > 0 && profile.email.length > 0) {
-      const key = formStorageKey('profile');
-      console.log('profile useEffect in App.tsx:', profile)
-      if(key) {
-        localStorage.setItem(key, JSON.stringify(profile));
-      }
-    }
-  }, [profile]);
 
+  useEffect(()=>{
+    if(userId >= 0) {
+      updateProfile(profile, userId);
+    }
+    //console.log('useEffect in App.tsx:', links)
+    // if(profile.firstname.length > 0 && profile.lastname.length > 0 && profile.email.length > 0) {
+    //   const key = formStorageKey('profile');
+    //   console.log('profile useEffect in App.tsx:', profile)
+    //   if(key) {
+    //     localStorage.setItem(key, JSON.stringify(profile));
+    //   }
+    // }
+  }, [profile]);
 
   return (
     <BrowserRouter basename="/link-sharing-app">
       <Routes>
-        <Route path="/" element={<Login setLogged={setLogged}/>} />
-        <Route path="/edit" element={<EditLinks links={links} setLinks={setLinks} logged={logged}/>} />
-        <Route path="/profile" element={<ProfileDetails profile={profile} setProfile={setProfile} links={links} logged={logged}/>} />
+        <Route path="/" element={<Login setUserId={setUserId}/>} />
+        <Route path="/edit" element={<EditLinks links={links} setLinks={setLinks} userId={userId}/>} />
+        <Route path="/profile" element={<ProfileDetails profile={profile} setProfile={setProfile} links={links} logged={userId >= 0}/>} />
         <Route path="/preview" element={<PreviewLinks links={links} profile={profile}/>} />
-        <Route path="/signUp" element={<Signup />} />
+        <Route path="/signUp" element={<Signup setUserId={setUserId}/>} />
       </Routes>
     </BrowserRouter>
   )

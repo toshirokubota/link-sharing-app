@@ -31,7 +31,7 @@ export default function LinkRepeater(
 
     const handleUrlChange = (event: ChangeEvent)=> {
         const value = (event.target as HTMLInputElement).value;
-        console.log('handleUrlChange: ', value);
+        //console.log('handleUrlChange: ', value);
         setLinks(prev => 
             prev.map(lk => 
                 lk === link ? ({...lk, link: value}): lk));

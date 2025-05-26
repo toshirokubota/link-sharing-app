@@ -5,11 +5,11 @@ import LinkRepeater from "./LinkRepeater";
 import MockPreviewLinks from "./MockPreviewLinks";
 import HeaderEdit from "./HeaderEdit";
 
-export default function EditLinks({links, setLinks, logged}:
+export default function EditLinks({links, setLinks, userId}:
     {
       links: LinkObject[],
       setLinks: React.Dispatch<React.SetStateAction<LinkObject[]>>
-      logged: boolean
+      userId: number
     }
 ) {
   const [editedLinks, setEditedLinks] = useState<LinkObject[]>(links);
@@ -39,9 +39,9 @@ export default function EditLinks({links, setLinks, logged}:
   };
 
   const addLink = () => {
-    setEditedLinks(prev => [{platform: '', link: ''}, ...prev]);
+    setEditedLinks(prev => [{platform: '', link: '', user_id: userId}, ...prev]);
     setDirty(true);
-    //console.log(editedLinks);
+    console.log('EditLinks: addLink: userId = ', userId);
   }
   const handleSave = () => {
     setLinks(editedLinks);
@@ -50,7 +50,7 @@ export default function EditLinks({links, setLinks, logged}:
 
     return (
       <div className='edit-page'>
-        <HeaderEdit logged={logged} dirty={dirty}/>
+        <HeaderEdit logged={userId >= 0} dirty={dirty}/>
         <div className='edit-container'>
         <MockPreviewLinks links={editedLinks}/>
         <div className="edit-card">

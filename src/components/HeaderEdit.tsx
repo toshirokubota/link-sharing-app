@@ -9,19 +9,32 @@ export default function HeaderEdit({logged, dirty}: {logged: boolean, dirty: boo
     const [nextRoute, setNextRoute] = useState("");
     const navigate = useNavigate();
 
-    const handleClick = (event: React.MouseEvent) => {
-        event.preventDefault();
-        const href:string = event.currentTarget.getAttribute("href") ?? '.';
-        const linkDestination : string = '../' + (href.split('/').pop() ?? '.');
-        console.log('HeaderEdit:HandleClic: ', linkDestination);
+    const handleNavigation = (to: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault(); 
+
+        console.log("Navigating to:", to); // No need for href parsing
         if(dirty) {
             setShowModal(true);
-            setNextRoute(linkDestination);
-            //navigate(linkDestination);
+            setNextRoute(to);
         } else {
-            navigate(linkDestination);
+            navigate(to);
         }
-    }
+    };
+
+    // const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    //     event.preventDefault();
+    //     const href:string = event.currentTarget.getAttribute("href") ?? '.';
+    //     const path: string = event.currentTarget.pathname;
+    //     const linkDestination : string = '../' + (href.split('/').pop() ?? '.');
+    //     console.log('HeaderEdit:HandleClick: ', href, path, linkDestination);
+    //     if(dirty) {
+    //         setShowModal(true);
+    //         setNextRoute(path);
+    //         //navigate(linkDestination);
+    //     } else {
+    //         navigate(path);
+    //     }
+    // }
 
     const handleCancel = ()=> {
         setShowModal(false);
@@ -39,14 +52,14 @@ export default function HeaderEdit({logged, dirty}: {logged: boolean, dirty: boo
                 logged ? 
                     <nav>
                         <Link 
-                            onClick={handleClick} 
+                            onClick={handleNavigation('/')} 
                             to="/" className={`${location.pathname==="/" ? "current": ""}`}>
                             <img className="md:hidden" src={staticAsset('/images/logo-devlinks-small.svg')} alt='logo' />
                             <img className="hidden md:inline-block" src={staticAsset('/images/logo-devlinks-large.svg')} alt='logo' />
                         </Link>                
                         <div>
                             <Link 
-                                onClick={handleClick} 
+                                onClick={handleNavigation('/edit')} 
                                 to="/edit" className={`${location.pathname==="/edit" ? "current": ""}`}>
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="none" viewBox="0 0 21 20">
@@ -56,7 +69,7 @@ export default function HeaderEdit({logged, dirty}: {logged: boolean, dirty: boo
                                 <span className="hidden md:inline-block">Links</span>
                             </Link>
                             <Link 
-                                onClick={handleClick} 
+                                onClick={handleNavigation('/profile')} 
                                 to="/profile" className={'inline ' + `${location.pathname==="/profile" ? "current": ""}`}>
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="none" viewBox="0 0 21 20">
@@ -67,7 +80,7 @@ export default function HeaderEdit({logged, dirty}: {logged: boolean, dirty: boo
                             </Link>
                         </div>
                         <Link 
-                            onClick={handleClick} 
+                            onClick={handleNavigation('/preview')} 
                             to="/preview" className={'rect' + `${location.pathname==="/" ? " current": ""}`}>
                             <span className="md:hidden">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">

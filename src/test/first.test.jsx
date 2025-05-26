@@ -9,11 +9,11 @@ describe('Login', () => {
     render(
       <MemoryRouter initialEntries={["/"]}>
         <Routes>
-          <Route path="/" element={<Login  setLogged={()=>{}}/>} />
+          <Route path="/" element={<Login  setUserId={()=>{}}/>} />
         </Routes>
       </MemoryRouter>
     );
-    //screen.debug();
+    screen.debug();
 
     expect(screen.queryAllByText('Login').length).toBe(2);
     expect(screen.queryByText('Email address')).toBeVisible();
@@ -26,7 +26,7 @@ describe('SignUp', () => {
     render(
       <MemoryRouter initialEntries={["/signUp"]}>
         <Routes>
-          <Route path="/signUp" element={<Signup />} />
+          <Route path="/signUp" element={<Signup setUserId={()=>{}}/>} />
         </Routes>
       </MemoryRouter>
     );
