@@ -8,11 +8,12 @@ import ProfileDetails from './components/ProfileDetails';
 import Signup from './components/Signup';
 import { type LinkObject, type Profile } from './types';
 //import { formStorageKey } from './lib';
-import { addNewLink, getLinks, getProfile, updateLink, updateProfile } from './lib/DB';
+import { addNewLink, deleteLink, getLinks, getProfile, updateLink, updateProfile } from './lib/DB';
 import { formStorageKey } from './lib';
 
 function App() {
   const [links, setLinks] = useState<LinkObject[]>([]);  
+  const [removedLinks, setRemovedLinks] = useState<LinkObject[]>([]);  
   const [profile, setProfile] = useState<Profile>({firstname: '', lastname: '', email:''})
   const [userId, setUserId] = useState(-1);
 
@@ -101,11 +102,23 @@ function App() {
     }
   }, [profile]);
 
+  useEffect(()=>{
+    if(userId >= 0 && removedLinks.length > 0) {
+      console.log('removedLinks: ', removedLinks);
+      if(supabase_enabled) {
+        for(const link of removedLinks) {
+          deleteLink(link);
+        }
+        setRemovedLinks([]);
+      }
+    }
+  }, [removedLinks]);
+
   return (
     <BrowserRouter basename="/link-sharing-app">
       <Routes>
         <Route path="/" element={<Login setUserId={setUserId}/>} />
-        <Route path="/edit" element={<EditLinks links={links} setLinks={setLinks} userId={userId}/>} />
+        <Route path="/edit" element={<EditLinks links={links} setLinks={setLinks} setRemovedLinks={setRemovedLinks} profile={profile} userId={userId}/>} />
         <Route path="/profile" element={<ProfileDetails profile={profile} setProfile={setProfile} links={links} logged={userId >= 0}/>} />
         <Route path="/preview" element={<PreviewLinks links={links} profile={profile}/>} />
         <Route path="/signUp" element={<Signup />} />

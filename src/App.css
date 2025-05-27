@@ -182,6 +182,10 @@ nav button {
   margin-block: 1rem;
 }
 
+input:focus {
+  box-shadow: 0px 0px 10px var(--color-soft-blue);
+}
+
 input[type=email] {
   position: relative;
   background-image: url("/images/icon-email.svg");
@@ -224,6 +228,31 @@ input[name=link-url] {
   font-size: 3rem;
   font-weight: bold;
   color: var(--color-soft-blue);
+}
+
+.profile-img-container {
+  position: relative;
+}
+.profile-img-container .image-loader-pane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150px;
+  height: 150px;
+  background-color: var(--color-gray-700);
+  opacity: 0;
+  z-index: 2;
+  display: grid;
+  place-content: center;
+}
+.profile-img-container:focus .image-loader-pane, .profile-img-container:hover .image-loader-pane {
+  opacity: 0.75;
+}
+
+.profile-img-square img {
+  width: 150px;
+  aspect-ratio: 1;
+  object-fit: cover;
 }
 
 .platform-entry > img {

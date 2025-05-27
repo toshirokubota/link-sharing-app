@@ -4,12 +4,13 @@ import type { LinkObject } from "../types";
 import { isValidURL, linksPreset, presetLinkIcon, presetLinkURL, staticAsset } from "../lib";
 
 export default function LinkRepeater(
-    {index, link, links, setLinks, dndHandler}: 
+    {index, link, links, setLinks, setRemovedLinks, dndHandler}: 
     {
         index: number, 
         link: LinkObject,
         links: LinkObject[],
         setLinks: React.Dispatch<React.SetStateAction<LinkObject[]>>
+        setRemovedLinks: React.Dispatch<React.SetStateAction<LinkObject[]>>
         dndHandler: any
     }) {
     const options = linksPreset.map(lk => (
@@ -57,6 +58,7 @@ export default function LinkRepeater(
         setLinks(prev => 
             prev.filter(lk => lk.platform != link.platform)
         )
+        setRemovedLinks(prev => [...prev, link]);
     }
 
     return (

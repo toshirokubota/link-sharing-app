@@ -53,7 +53,7 @@ export default function ProfileDetails({profile, setProfile, links, logged}:
       <div className='profile-page'>
         <HeaderEdit logged={logged} dirty={dirty}/>
         <div className='profile-container'>
-        <MockPreviewLinks links={links}/>
+        <MockPreviewLinks links={links} profile={profile}/>
         <div className="profile-card">
             <h1>Profile Details</h1>
             <p>Add your details to create a personal touch to your profile.</p>

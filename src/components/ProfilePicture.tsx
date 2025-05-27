@@ -39,6 +39,25 @@ export default function ProfilePicture ({profile, setProfile}:
         event.preventDefault(); // Prevent default behavior to allow drop
     };
 
+    function ImageLoaderPane({caption}: {caption:string}) {
+        return (
+            <div className="image-loader-pane">
+                <label htmlFor="file-input" className="flex justify-center">
+                    <img src={staticAsset('/images/icon-upload-image.svg')} alt='upload image icon'/>
+                    <input 
+                        type="file" 
+                        id="file-input" 
+                        name="file" 
+                        accept="image/png, image/jpeg" 
+                        className="hidden"
+                        onChange={handleChange}
+                        />
+                </label>
+                <span className='block text-sm font-semibold'>{caption}</span>
+            </div>        
+        )
+    }
+
     //console.log('Profile in ProfilePicture: ', profile);
     return (
         <div className='profile-photo'>
@@ -46,39 +65,34 @@ export default function ProfilePicture ({profile, setProfile}:
             <div className='draggable'
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
-                // style={{
-                //     width: "300px",
-                //     height: "200px",
-                //     border: "2px dashed #ccc",
-                //     display: "flex",
-                //     alignItems: "center",
-                //     justifyContent: "center",
-                //     cursor: "pointer",
-                // }}
             >
                 {profile.photo ? 
-                    <div className="profile-img">
+                <div className='profile-img-container'>
+                    <div className="profile-img-square">
                         <img src={profile.photo} alt='profile photo'/>
                     </div>
-                : profile.firstname.length > 0 && profile.lastname.length > 0 ? 
-                    <div className="profile-img">
-                        <span>{profile.firstname[0].toUpperCase() + profile.lastname[0].toUpperCase()}</span>
-                    </div>
+                    <ImageLoaderPane caption={'Change Image'} />
+                </div>
+                // : profile.firstname.length > 0 && profile.lastname.length > 0 ? 
+                //     <div className="profile-img-square">
+                //         <span>{profile.firstname[0].toUpperCase() + profile.lastname[0].toUpperCase()}</span>
+                //     </div>
                 :
-                <>
-                    <label htmlFor="file-input" className="flex justify-center">
-                        <img src={staticAsset('/images/icon-upload-image.svg')} alt='upload image icon'/>
-                        <input 
-                            type="file" 
-                            id="file-input" 
-                            name="file" 
-                            accept="image/png, image/jpeg" 
-                            className="hidden"
-                            onChange={handleChange}
-                            />
-                    </label>
-                    <span className='block text-sm font-semibold'>+Upload Image</span>
-                </>
+                    <ImageLoaderPane caption={'+Upload Image'} />
+                // <>
+                //     <label htmlFor="file-input" className="flex justify-center">
+                //         <img src={staticAsset('/images/icon-upload-image.svg')} alt='upload image icon'/>
+                //         <input 
+                //             type="file" 
+                //             id="file-input" 
+                //             name="file" 
+                //             accept="image/png, image/jpeg" 
+                //             className="hidden"
+                //             onChange={handleChange}
+                //             />
+                //     </label>
+                //     <span className='block text-sm font-semibold'>+Upload Image</span>
+                // </>
                }
             </div>
             <p className="text-xs text-gray-500">

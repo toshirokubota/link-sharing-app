@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import { staticAsset } from "../lib";
-import type { LinkObject } from "../types";
+import type { LinkObject, Profile } from "../types";
 import LinkRepeater from "./LinkRepeater";
 import MockPreviewLinks from "./MockPreviewLinks";
 import HeaderEdit from "./HeaderEdit";
 
-export default function EditLinks({links, setLinks, userId}:
+export default function EditLinks({links, setLinks, setRemovedLinks, profile, userId}:
     {
       links: LinkObject[],
       setLinks: React.Dispatch<React.SetStateAction<LinkObject[]>>
+      setRemovedLinks: React.Dispatch<React.SetStateAction<LinkObject[]>>
+      profile: Profile,
       userId: number
     }
 ) {
   const [editedLinks, setEditedLinks] = useState<LinkObject[]>([]);
+  const [localRemovedLinks, setLocalRemovedLinks] = useState<LinkObject[]>([]);
   const [dragging, setDragging] = useState(-1);
   const [dirty, setDirty] = useState(false);
 
@@ -51,13 +54,14 @@ export default function EditLinks({links, setLinks, userId}:
   const handleSave = () => {
     setLinks(editedLinks);
     setDirty(false);
+    setRemovedLinks(prev => [...prev, ...localRemovedLinks]);
   }
 
     return (
       <div className='edit-page'>
         <HeaderEdit logged={userId >= 0} dirty={dirty}/>
         <div className='edit-container'>
-        <MockPreviewLinks links={editedLinks}/>
+        <MockPreviewLinks links={editedLinks} profile={profile}/>
         <div className="edit-card">
           <h1>Customize your links</h1>
           <h2>
@@ -91,6 +95,7 @@ export default function EditLinks({links, setLinks, userId}:
                     link={link} 
                     links={editedLinks}
                     setLinks={setEditedLinks}
+                    setRemovedLinks={setLocalRemovedLinks}
                     dndHandler={{handleDragStart, handleDragOver, handleDrop}}
                   />))
               }

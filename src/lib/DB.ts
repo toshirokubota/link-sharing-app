@@ -111,24 +111,6 @@ export async function getLinks(user_id: number): Promise<LinkObject[]> {
     }
 }
 
-// export async function addLink(link: LinkObject) {
-//     try {
-//         const response = await supabase
-//           .from('Link')
-//           .select('order')
-//           .eq('user_id', link.user_id);
-
-//         const { error } = await supabase
-//             .from('Link')
-//             .insert({...link, order: (response && response.data) ? response.data.length + 1: 1});
-//         if (error) {
-//             throw error;
-//         } 
-//     } catch (error) {
-//         console.error('Error adding link: ', error);
-//     }
-// }
-
 export async function addNewLink(link: LinkObject, order: number): Promise<LinkObject> {
   try {
     if(!link.link_id) {
@@ -144,7 +126,7 @@ export async function addNewLink(link: LinkObject, order: number): Promise<LinkO
       }
     } 
   } catch (error) {
-      console.error('Error updating links: ', error);
+      console.error('Error adding a new link: ', error);
   } finally {
     return link;
   }
@@ -162,28 +144,24 @@ export async function updateLink(link: LinkObject, order: number) {
         throw response.error;    
     }
   } catch (error) {
-      console.error('Error updating links: ', error);
+      console.error('Error updating link: ', error);
       //return undefined;
   }
 }
 
-// export async function updateLinks(links: LinkObject[]) {
-//   for(let i=0; i<links.length; ++i) {
-//     const link = links[i];
-//     try {
-//       const updated = ({platform: link.platform, link: link.link, order: i + 1});
-//       const response = await supabase
-//           .from('Link')
-//           .update(updated)
-//           .eq('id', link.link_id)
-//       console.log('updateLinks: ', response, updated, link.link_id);
-//       if (response.error) {
-//           throw response.error;    
-//       }
-//     } catch (error) {
-//         console.error('Error updating links: ', error);
-//         //return undefined;
-//     }
-//   }
-// }
+export async function deleteLink(link: LinkObject) {
+  try {
+    const response = await supabase
+        .from('Link')
+        .delete()
+        .eq('id', link.link_id)
+    console.log('deleteLinks: ', response, link);
+    if (response.error) {
+        throw response.error;    
+    }
+  } catch (error) {
+      console.error('Error deleting link: ', error);
+      //return undefined;
+  }
+}
 
