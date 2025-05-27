@@ -18,10 +18,13 @@ export default function PreviewLinks({links, profile}:
                     <div className="profile-img">
                         <img src={profile.photo} alt='profile photo'/>
                     </div>
-                    :            
+                    :      
+                profile.firstname.length > 0 && profile.lastname.length > 0 ? 
                     <div className="profile-img">
-                        <span>{profile.firstname.length > 0 && profile.lastname.length > 0 ? profile.firstname[0].toUpperCase() + profile.lastname[0].toUpperCase(): '??'}</span>
+                        <span>{profile.firstname[0].toUpperCase() + profile.lastname[0].toUpperCase()}</span>
                     </div>
+                    :
+                    <></>
             }
             <p className='text-3xl font-bold align-middle my-4'>{profile.firstname} {profile.lastname}</p>
             <p className='text-base align-middle my-4'>{profile.email}</p>

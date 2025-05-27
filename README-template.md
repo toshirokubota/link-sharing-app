@@ -63,19 +63,18 @@ Users should be able to:
 
 ### What I learned
 
+- I learned how to use Supabase and integrating into the project.
+- I learned how to implement drag and drop UI.
+
 
 ### Continued development
 
+- I continue practicing React and Supabase for building a full-stack application.
 
 ### Useful resources
-
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
 
 ## Author
 
 - Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/toshirokubota)
-
 
 ## Acknowledgments

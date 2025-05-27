@@ -17,7 +17,7 @@ export default function LinkRepeater(
         {
             value: lk.platform, 
             label: 
-                    (<span style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                    (<span className='link-preset-label' style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
                         <img 
                             src={staticAsset(`/images/${presetLinkIcon.get(lk.platform)}`)} 
                             alt=''
@@ -87,7 +87,17 @@ export default function LinkRepeater(
                 <Select 
                     options={availableOptions} 
                     value={selectedOption}
-                    onChange={handlePlatformChange}/>
+                    onChange={handlePlatformChange}
+                    styles={{
+                        control: (base, state) => ({
+                        ...base,
+                        //borderColor: state.isFocused ? "blue" : "gray",
+                        "&:hover, &:focus": {
+                            boxShadow: '0 0 10px #633CFF',
+                        },
+                        }),
+                    }}
+                />
                 <div className={'url-section' + `${urlError ? ' invalid': ''}` + `${link.link.trim().length === 0 ? ' empty': ''}`}>
                 <label htmlFor="link-url">Link</label>
                 <input 
