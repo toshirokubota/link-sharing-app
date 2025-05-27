@@ -7,7 +7,6 @@ import PreviewLinks from './components/PreviewLinks';
 import ProfileDetails from './components/ProfileDetails';
 import Signup from './components/Signup';
 import { type LinkObject, type Profile } from './types';
-//import { formStorageKey } from './lib';
 import { addNewLink, deleteLink, getLinks, getProfile, updateLink, updateProfile } from './lib/DB';
 import { formStorageKey } from './lib';
 
@@ -18,7 +17,6 @@ function App() {
   const [userId, setUserId] = useState(-1);
 
   const supabase_enabled = import.meta.env.VITE_SUPABASE_ENABLED === 'true';
-  //console.log('supabase_enabled', supabase_enabled);
 
   useEffect( () => {
     if(userId >= 0) {
@@ -26,7 +24,7 @@ function App() {
         const _getLinks = async () => {
           const loaded = await getLinks(userId);
           setLinks(loaded);
-          console.log('setLink called with', loaded);
+          // console.log('setLink called with', loaded);
         };
         _getLinks();
 
@@ -62,7 +60,7 @@ function App() {
         const _insertNew = async () => {
           for(let i=0; i<links.length; ++i) {
             let link = links[i];
-            console.log('in useEffect of App: update(): link = ', link)
+            // console.log('in useEffect of App: update(): link = ', link)
             if(!link.link_id) {
               link = await addNewLink(link, i + 1);
             } else {
@@ -90,10 +88,10 @@ function App() {
       if(supabase_enabled) {
         updateProfile(profile, userId);
       } else {
-        console.log('useEffect in App.tsx:', links)
+        // console.log('useEffect in App.tsx:', links)
         if(profile.firstname.length > 0 && profile.lastname.length > 0 && profile.email.length > 0) {
           const key = formStorageKey('profile');
-          console.log('profile useEffect in App.tsx:', profile)
+          // console.log('profile useEffect in App.tsx:', profile)
           if(key) {
             localStorage.setItem(key, JSON.stringify(profile));
           }
@@ -104,7 +102,7 @@ function App() {
 
   useEffect(()=>{
     if(userId >= 0 && removedLinks.length > 0) {
-      console.log('removedLinks: ', removedLinks);
+      // console.log('removedLinks: ', removedLinks);
       if(supabase_enabled) {
         for(const link of removedLinks) {
           deleteLink(link);

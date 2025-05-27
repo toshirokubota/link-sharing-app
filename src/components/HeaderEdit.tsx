@@ -12,7 +12,6 @@ export default function HeaderEdit({logged, dirty}: {logged: boolean, dirty: boo
     const handleNavigation = (to: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault(); 
 
-        console.log("Navigating to:", to); // No need for href parsing
         if(dirty) {
             setShowModal(true);
             setNextRoute(to);
@@ -20,21 +19,6 @@ export default function HeaderEdit({logged, dirty}: {logged: boolean, dirty: boo
             navigate(to);
         }
     };
-
-    // const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    //     event.preventDefault();
-    //     const href:string = event.currentTarget.getAttribute("href") ?? '.';
-    //     const path: string = event.currentTarget.pathname;
-    //     const linkDestination : string = '../' + (href.split('/').pop() ?? '.');
-    //     console.log('HeaderEdit:HandleClick: ', href, path, linkDestination);
-    //     if(dirty) {
-    //         setShowModal(true);
-    //         setNextRoute(path);
-    //         //navigate(linkDestination);
-    //     } else {
-    //         navigate(path);
-    //     }
-    // }
 
     const handleCancel = ()=> {
         setShowModal(false);

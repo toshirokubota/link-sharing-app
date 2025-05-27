@@ -10,7 +10,7 @@ export default function MockPreviewLinks({links, profile}: {links: LinkObject[],
                 profile.photo ? 
                     <div 
                         className="profile-img"
-                        style={{position:'absolute', left:'50%', top:'0',  transform: 'translate(-50%, 87px)'}}
+                        style={{position:'absolute', left:'50%', top:'0',  transform: 'translate(-50%, 92px)'}}
                     >
                         <img src={profile.photo} alt='profile photo'/>
                     </div>
@@ -18,7 +18,7 @@ export default function MockPreviewLinks({links, profile}: {links: LinkObject[],
                 profile.firstname.length > 0 && profile.lastname.length > 0 ?
                     <div 
                         className="profile-img"
-                        style={{position:'absolute', left:'50%', top:'0',  transform: 'translate(-50%, 87px)'}}
+                        style={{position:'absolute', left:'50%', top:'0',  transform: 'translate(-50%, 92px)'}}
                     >
                         <span>{profile.firstname[0].toUpperCase() + profile.lastname[0].toUpperCase()}</span>
                     </div>

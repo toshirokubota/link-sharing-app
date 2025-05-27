@@ -4,22 +4,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { staticAsset } from "../lib";
 
-
-// const notify = () => {
-//     toast.success("This is a success toast!", {
-//         position: toast.POSITION.TOP_RIGHT,
-//         autoClose: 3000,
-//     });
-
-//     return (
-//         <div>
-//         <button onClick={notify}>Show Toast</button>
-//         <ToastContainer />
-//         </div>
-//     );
-// };
-
-
 export default function HeaderPreview({links}: {links: LinkObject[]}) {
     const copyToClipboard = async () => {
         await navigator.clipboard.writeText(JSON.stringify(links));

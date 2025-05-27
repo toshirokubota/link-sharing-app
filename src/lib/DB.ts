@@ -31,7 +31,6 @@ export async function verifyUser(email: string, password: string): Promise<numbe
       if (error) {
         throw error;
       } else {
-        //console.log('verifyUser: ', data);
         const match = await bcrypt.compare(password, data[0].password);
         if(data[0].password && match) return data[0].id;
         else return -1;
@@ -85,7 +84,6 @@ export async function updateProfile(profile: Profile, user_id: number) {
       if (error) {
         throw error;
       } else {
-        //return;
       }
     } catch (error) {
       console.error('Error updating profile: ', error);
@@ -145,7 +143,6 @@ export async function updateLink(link: LinkObject, order: number) {
     }
   } catch (error) {
       console.error('Error updating link: ', error);
-      //return undefined;
   }
 }
 
@@ -161,7 +158,6 @@ export async function deleteLink(link: LinkObject) {
     }
   } catch (error) {
       console.error('Error deleting link: ', error);
-      //return undefined;
   }
 }
 

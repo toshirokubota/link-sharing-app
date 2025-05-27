@@ -1,6 +1,5 @@
 import { useState, type ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-//import { formStorageKey, isEmpty, isValidEmail } from "../lib";
 import type { SignupData } from "../types";
 import HeaderLogo from "./HeaderLogo";
 import { verifyUser } from "../lib/DB";
@@ -10,7 +9,7 @@ export default function Login ({setUserId}:{setUserId: React.Dispatch<React.SetS
     const [formData, setFormData] = useState<SignupData>({email:'', password:''});
     const navigate = useNavigate();
     const [error, setError] = useState({email: false, password: false, account: false, email_empty: false});
-    const supabase_enabled = import.meta.env.VITE_SUPABASE_ENABLED;
+    const supabase_enabled = import.meta.env.VITE_SUPABASE_ENABLED === 'true';
 
     const handleChange = (event: ChangeEvent)=> {
         const name = (event.target as HTMLInputElement).name;
@@ -60,7 +59,7 @@ export default function Login ({setUserId}:{setUserId: React.Dispatch<React.SetS
             } else {
                 setError(prev => ({...prev, account: true}))
             }
-            console.log('handleSubmit', error, item, formData);
+            //console.log('handleSubmit', error, item, formData);
         }
     }
 

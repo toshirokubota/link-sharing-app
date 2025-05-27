@@ -32,7 +32,6 @@ export default function LinkRepeater(
 
     const handleUrlChange = (event: ChangeEvent)=> {
         const value = (event.target as HTMLInputElement).value;
-        //console.log('handleUrlChange: ', value);
         setLinks(prev => 
             prev.map(lk => 
                 lk === link ? ({...lk, link: value}): lk));
@@ -89,9 +88,8 @@ export default function LinkRepeater(
                     value={selectedOption}
                     onChange={handlePlatformChange}
                     styles={{
-                        control: (base, state) => ({
+                        control: (base) => ({
                         ...base,
-                        //borderColor: state.isFocused ? "blue" : "gray",
                         "&:hover, &:focus": {
                             boxShadow: '0 0 10px #633CFF',
                         },

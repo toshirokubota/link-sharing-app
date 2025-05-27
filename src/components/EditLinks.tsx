@@ -20,17 +20,13 @@ export default function EditLinks({links, setLinks, setRemovedLinks, profile, us
   const [dirty, setDirty] = useState(false);
 
   useEffect(() => {
-    //console.log("Links changed in EditLinks:", links, editedLinks);
     setEditedLinks(links);
   }, [links]);
 
   const handleDragStart = (_event:React.DragEvent, index:number) => {
-    //_event.preventDefault();
     setDragging(index);
-    //console.log('drag started.', index);
   };
   const handleDragOver = (event: React.DragEvent) => {
-      //console.log('drag being performed...');
       event.preventDefault();
   };
   const handleDrop = (_event: React.DragEvent, index:number) => {
@@ -41,15 +37,12 @@ export default function EditLinks({links, setLinks, setRemovedLinks, profile, us
       setEditedLinks(newItems);
       setDragging(-1);
       setDirty(true);
-      //console.log('links reordered.', index);
     }
-    //console.log('drag ended.', index);
   };
 
   const addLink = () => {
     setEditedLinks(prev => [{platform: '', link: '', user_id: userId}, ...prev]);
     setDirty(true);
-    console.log('EditLinks: addLink: userId = ', userId);
   }
   const handleSave = () => {
     setLinks(editedLinks);

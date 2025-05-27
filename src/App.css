@@ -220,7 +220,7 @@ input[name=link-url] {
 }
 
 .profile-img img {
-  width: 104px;
+  width: 96px;
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 50%;

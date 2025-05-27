@@ -46,7 +46,6 @@ export default function ProfileDetails({profile, setProfile, links, logged}:
             setProfile(formData);
             setDirty(false);
         }
-        //console.log('profile is saved.', profile);
     }
 
     return (
